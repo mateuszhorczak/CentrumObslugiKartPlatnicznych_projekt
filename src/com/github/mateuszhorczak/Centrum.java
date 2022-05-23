@@ -1,5 +1,4 @@
 package com.github.mateuszhorczak;
-
 import java.util.List;
 
 public class Centrum {
