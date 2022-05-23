@@ -27,7 +27,6 @@ public class Main {
             //usuwa karte z kolekcji o danym numerze
 
             //dodaje wpis z transkakcji do archwium
-            konrad ma duzego wacka
         }
 
     }
