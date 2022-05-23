@@ -5,6 +5,7 @@ import java.util.List;
 public class Osoba {
     private String imie, nazwisko;
     private List<Karta> karty;
+    private int duuuuuuuuuuuuuuuuuuupa;
 
     public Osoba(String imie, String nazwisko, List<Karta> karty) {
         this.imie = imie;
