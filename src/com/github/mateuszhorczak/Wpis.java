@@ -9,16 +9,16 @@ public class Wpis {
     Karta karta;
     KlientCentrum klientCentrum;
     Bank bank;
-    boolean powodzenie_transkacji;
+    boolean powodzenieTranskacji;
 
     public Wpis(Osoba osoba, Date data, double kwota, Karta karta, KlientCentrum klientCentrum,
-                Bank bank, boolean powodzenie_transakcji){
+                Bank bank, boolean powodzenieTransakcji) {
         this.osoba = osoba;
         this.data = data;
         this.kwota = kwota;
         this.karta = karta;
         this.klientCentrum = klientCentrum;
         this.bank = bank;
-        this.powodzenie_transkacji = powodzenie_transakcji;
+        this.powodzenieTranskacji = powodzenieTransakcji;
     }
 }

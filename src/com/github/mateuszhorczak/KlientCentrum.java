@@ -4,7 +4,7 @@ public abstract class KlientCentrum {
     String Nazwa_Firmy;
     String Nazwa_Uslugi;
 
-    public KlientCentrum(String Nazwa_Firmy, String Nazwa_Uslugi){
+    public KlientCentrum(String Nazwa_Firmy, String Nazwa_Uslugi) {
         this.Nazwa_Firmy = Nazwa_Firmy;
         this.Nazwa_Uslugi = Nazwa_Uslugi;
     }

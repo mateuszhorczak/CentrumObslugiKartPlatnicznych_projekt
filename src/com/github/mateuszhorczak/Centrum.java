@@ -1,5 +1,6 @@
 package com.github.mateuszhorczak;
 import java.util.List;
+import java.util.Objects;
 
 public class Centrum {
     private List<Wpis> archiwum;
@@ -18,9 +19,9 @@ public class Centrum {
         return true;
     }
 
-    public boolean czyIstniejeKlient(String nazwaFirmy){
-        for(var item: klienciCentrum){
-            if (item.getNazwa_Firmy() == nazwaFirmy){
+    public boolean czyIstniejeKlient(String nazwaFirmy) {
+        for (var item: klienciCentrum) {
+            if (Objects.equals(item.getNazwa_Firmy(), nazwaFirmy)) {
                 return true;
             }
         }
