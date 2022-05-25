@@ -12,6 +12,18 @@ public class Osoba {
         this.karty = karty;
     }
 
+    public Osoba() {
+
+    }
+
+    public int zliczKarty() {
+        int i = 0;
+        for (var item : karty) {
+            i++;
+        }
+        return i;
+    }
+
     public boolean usunKarte(Karta karta) {
         if (czyNalezyKartaDoOsoby(karta)) {
             karty.remove(karta);
@@ -41,4 +53,11 @@ public class Osoba {
         return karty;
     }
 
+    public String getImie() {
+        return imie;
+    }
+
+    public String getNazwisko() {
+        return nazwisko;
+    }
 }

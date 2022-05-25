@@ -22,6 +22,16 @@ public class Bank {
         return false;
     }
 
+    public Osoba znajdzOsobe(String imie, String nazwisko) {
+        for (var item : osoby) {
+            if (imie.equalsIgnoreCase(item.getImie()) && nazwisko.equalsIgnoreCase(item.getNazwisko())) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+
     public boolean wplac(int numerPodany, double kwota) {
         if (czyNalezyOsobaDoBanku(numerPodany)) {
             temp.setStanKarty(temp.getStanKarty() + kwota);
@@ -42,5 +52,7 @@ public class Bank {
         }
     }
 
-
+    public List<Osoba> getOsoby() {
+        return osoby;
+    }
 }

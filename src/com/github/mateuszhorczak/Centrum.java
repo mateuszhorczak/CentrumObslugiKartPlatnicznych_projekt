@@ -28,19 +28,64 @@ public class Centrum {
         return false;
     }
 
-    public boolean dodajKlient(KlientCentrum klient){
-        if (!czyIstniejeKlient(klient.Nazwa_Firmy)){
+    public boolean dodajKlient(KlientCentrum klient) {
+        if (!czyIstniejeKlient(klient.Nazwa_Firmy)) {
             klienciCentrum.add(klient);
             return true;
         }
         return false;
     }
 
-    public boolean usunKlient(KlientCentrum klient){
-        if (czyIstniejeKlient(klient.Nazwa_Firmy)){
+    public boolean usunKlient(KlientCentrum klient) {
+        if (czyIstniejeKlient(klient.Nazwa_Firmy)) {
             klienciCentrum.remove(klient);
             return true;
         }
         return false;
+    }
+
+    public int iloscBankow(Centrum centrum) {
+        return centrum.getBanki().lastIndexOf(centrum.getBanki().get(0));
+    }
+
+    public int iloscSklepow(Centrum centrum) {
+        return centrum.getKlienciCentrum().lastIndexOf(centrum.getKlienciCentrum().get(0));
+    }
+
+    public void wypiszBanki() {
+        for (var item : banki) {
+            System.out.println(item);
+        }
+    }
+
+    public void wypiszKlientowCentrum() {
+        for (var item : getKlienciCentrum()) {
+            System.out.println(item.Nazwa_Firmy);
+        }
+    }
+
+    public boolean czyNumerKartyJestZajety(int numerKarty) {
+        for (var item : getBanki()) {
+            for (var item2 : item.getOsoby()) {
+                for (var item3 : item2.getKarty()) {
+                    if (item3.getNumerKarty() == numerKarty) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public List<Wpis> getArchiwum() {
+        return archiwum;
+    }
+
+    public List<KlientCentrum> getKlienciCentrum() {
+        return klienciCentrum;
+    }
+
+    public List<Bank> getBanki() {
+        return banki;
     }
 }
