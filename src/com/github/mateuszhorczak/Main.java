@@ -42,9 +42,11 @@ public class Main {
             double kwota, rozmiarDebetu;
             String imie, nazwisko, nazwaSklepu;
             Bank bank = new Bank (new ArrayList<>());
+
+
+
             boolean takCzyNie = bank.wczytajDane();
             System.out.println(takCzyNie);
-
             Scanner scanner = new Scanner(System.in);
 
             while (true) {

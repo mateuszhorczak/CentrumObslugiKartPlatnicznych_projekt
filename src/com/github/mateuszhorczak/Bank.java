@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Bank {
@@ -25,8 +26,10 @@ public class Bank {
             double stanKarty = Double.parseDouble(wyrazy[3]);
             if (rodzajKarty == 1){
                 KartaBankomatowa kartaBankomatowa = new KartaBankomatowa(numerKarty, stanKarty);
-                for (Osoba osoba: osoby){
-                    if (osoba.getImie() == wyrazy[0] && osoba.getNazwisko() == wyrazy[1]){
+                Osoba osobaTest = new Osoba();
+                osoby.add(osobaTest);
+                for (Osoba osoba: osoby) {
+                    if (Objects.equals(osoba.getImie(), wyrazy[0]) && Objects.equals(osoba.getNazwisko(), wyrazy[1])){
                         osoba.dodajKarte(kartaBankomatowa);
                     }
                     else{
@@ -38,8 +41,8 @@ public class Bank {
             }
             if (rodzajKarty == 2){
                 KartaDebetowa kartaDebetowa = new KartaDebetowa(numerKarty, stanKarty);
-                for (Osoba osoba: osoby){
-                    if (osoba.getImie() == wyrazy[0] && osoba.getNazwisko() == wyrazy[1]){
+                for (Osoba osoba : osoby){
+                    if (Objects.equals(osoba.getImie(), wyrazy[0]) && Objects.equals(osoba.getNazwisko(), wyrazy[1])){
                         osoba.dodajKarte(kartaDebetowa);
                     }
                     else{
@@ -52,7 +55,7 @@ public class Bank {
             if (rodzajKarty == 3){
                 KartaKredytowa kartaKredytowa = new KartaKredytowa(numerKarty,stanKarty);
                 for (Osoba osoba: osoby){
-                    if (osoba.getImie() == wyrazy[0] && osoba.getNazwisko() == wyrazy[1]){
+                    if (Objects.equals(osoba.getImie(), wyrazy[0]) && Objects.equals(osoba.getNazwisko(), wyrazy[1])){
                         osoba.dodajKarte(kartaKredytowa);
                     }
                     else{
