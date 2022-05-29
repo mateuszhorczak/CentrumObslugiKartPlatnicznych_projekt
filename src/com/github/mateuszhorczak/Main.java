@@ -1,10 +1,13 @@
 package com.github.mateuszhorczak;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         while(true) {
             //System.out.println("W jakim miejscu chcesz zrealizowac platnosc");
             //wyswietl
@@ -34,11 +37,16 @@ public class Main {
             /*
             //Tu bedzie wczytywanie danych z bazy do zmiennej centrum
             */
+
             int choice, choice2,  value, numerKarty;
             double kwota, rozmiarDebetu;
             String imie, nazwisko, nazwaSklepu;
-            Bank bank;
+            Bank bank = new Bank (new ArrayList<>());
+            boolean takCzyNie = bank.wczytajDane();
+            System.out.println(takCzyNie);
+
             Scanner scanner = new Scanner(System.in);
+
             while (true) {
                 System.out.println("Witaj uzytkowniku gdzie chcesz sie udac??");
                 System.out.println("Do banku: 1");
@@ -110,9 +118,7 @@ public class Main {
                                                 osoba.dodajKarte(kartaKredytowa);
                                                 break;
                                             case 2:
-                                                System.out.println("Podaj rozmiar debetu");
-                                                rozmiarDebetu = scanner.nextDouble();
-                                                Karta kartaDebetowa = new KartaDebetowa(numerKarty, kwota, rozmiarDebetu);
+                                                Karta kartaDebetowa = new KartaDebetowa(numerKarty, kwota);
                                                 osoba.dodajKarte(kartaDebetowa);
                                                 break;
                                             case 3:
