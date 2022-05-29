@@ -1,6 +1,5 @@
 package com.github.mateuszhorczak;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,15 +25,14 @@ public class Bank {
             double stanKarty = Double.parseDouble(wyrazy[3]);
             if (rodzajKarty == 1){
                 KartaBankomatowa kartaBankomatowa = new KartaBankomatowa(numerKarty, stanKarty);
-                Osoba osobaTest = new Osoba();
-                osoby.add(osobaTest);
                 for (Osoba osoba: osoby) {
                     if (Objects.equals(osoba.getImie(), wyrazy[0]) && Objects.equals(osoba.getNazwisko(), wyrazy[1])){
                         osoba.dodajKarte(kartaBankomatowa);
                     }
                     else{
-                        Osoba osoba1 = new Osoba(wyrazy[0],wyrazy[1],new ArrayList<>());
-                        osoba1.dodajKarte(kartaBankomatowa);
+                        ArrayList<Karta> karty = new ArrayList<>();
+                        karty.add(kartaBankomatowa);
+                        Osoba osoba1 = new Osoba(wyrazy[0],wyrazy[1],karty);
                         osoby.add(osoba1);
                     }
                 }
@@ -46,8 +44,9 @@ public class Bank {
                         osoba.dodajKarte(kartaDebetowa);
                     }
                     else{
-                        Osoba osoba1 = new Osoba(wyrazy[0],wyrazy[1],new ArrayList<>());
-                        osoba1.dodajKarte(kartaDebetowa);
+                        ArrayList<Karta> karty = new ArrayList<>();
+                        karty.add(kartaDebetowa);
+                        Osoba osoba1 = new Osoba(wyrazy[0],wyrazy[1],karty);
                         osoby.add(osoba1);
                     }
                 }
@@ -59,8 +58,9 @@ public class Bank {
                         osoba.dodajKarte(kartaKredytowa);
                     }
                     else{
-                        Osoba osoba1 = new Osoba(wyrazy[0],wyrazy[1],new ArrayList<>());
-                        osoba1.dodajKarte(kartaKredytowa);
+                        ArrayList<Karta> karty = new ArrayList<>();
+                        karty.add(kartaKredytowa);
+                        Osoba osoba1 = new Osoba(wyrazy[0],wyrazy[1],karty);
                         osoby.add(osoba1);
                     }
                 }
@@ -113,5 +113,9 @@ public class Bank {
 
     public List<Osoba> getOsoby() {
         return osoby;
+    }
+
+    public void dodajOsobe(Osoba osoba){
+        osoby.add(osoba);
     }
 }
