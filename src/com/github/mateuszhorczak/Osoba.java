@@ -1,15 +1,14 @@
 package com.github.mateuszhorczak;
-
-import java.util.List;
+import java.util.ArrayList;
 
 public class Osoba {
     private String imie, nazwisko;
-    private List<Karta> karty;
+    private ArrayList<Karta> karty;
 
-    public Osoba(String imie, String nazwisko, List<Karta> karty) {
+    public Osoba(String imie, String nazwisko) {
         this.imie = imie;
         this.nazwisko = nazwisko;
-        this.karty = karty;
+        this.karty = new ArrayList<>();
     }
 
     public Osoba() {
@@ -49,7 +48,7 @@ public class Osoba {
         return false;
     }
 
-    public List<Karta> getKarty() {
+    public ArrayList<Karta> getKarty() {
         return karty;
     }
 

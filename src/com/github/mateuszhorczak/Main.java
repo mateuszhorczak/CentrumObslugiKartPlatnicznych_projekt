@@ -1,13 +1,24 @@
 package com.github.mateuszhorczak;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 public class Main {
-
     public static void main(String[] args) throws IOException {
+        Bank bank = new Bank();
+        bank.wczytajDane();
+        ArrayList<Osoba> osoby = bank.getOsoby();
+        int i=1;
+        for(Osoba osoba: osoby){
+            System.out.println("Osoba numer: " + i);
+            System.out.println(osoba.getImie());
+            System.out.println(osoba.getNazwisko());
+            for (Karta karta: osoba.getKarty()){
+                System.out.println(karta.getNumerKarty());
+                System.out.println(karta.getStanKarty());
+            }
+            i++;
+        }
+
         while(true) {
             //System.out.println("W jakim miejscu chcesz zrealizowac platnosc");
             //wyswietl
@@ -42,13 +53,6 @@ public class Main {
             double kwota, rozmiarDebetu;
             String imie, nazwisko, nazwaSklepu;
 
-
-            Bank bank = new Bank(new ArrayList<>());
-            ArrayList<Karta> kartyy = new ArrayList<>();
-            KartaDebetowa kartaa = new KartaDebetowa(30,40);
-            kartyy.add(kartaa);
-            Osoba osobaTest = new Osoba("df","sfa",kartyy);
-            bank.dodajOsobe(osobaTest);
 
             Scanner scanner = new Scanner(System.in);
 

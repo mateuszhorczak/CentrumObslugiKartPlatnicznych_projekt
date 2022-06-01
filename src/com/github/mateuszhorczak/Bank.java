@@ -2,50 +2,67 @@ package com.github.mateuszhorczak;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Bank {
-    private List<Osoba> osoby;
+    private ArrayList<Osoba> osoby;
     private Karta tempKarta;
 
-    public Bank(List<Osoba> osoby) {
-        this.osoby = osoby;
+    public Bank() {
+        this.osoby = new ArrayList<>();
     }
 
     public void  wczytajDane() throws IOException {
-        File plik = new File("dane.txt");
+        System.out.println("Podaj nazwe pliku z danymi o osobach: ");
+        Scanner scanner = new Scanner(System.in);
+        String nazwa_pliku = scanner.nextLine();
+        File plik = new File(nazwa_pliku);
         Scanner scannerZPliku = new Scanner(plik);
-        while(scannerZPliku.hasNext()) {
+        while (scannerZPliku.hasNext()) {
             String linia = scannerZPliku.nextLine();
             String[] wyrazy = linia.split(" ");
             int rodzajKarty = Integer.parseInt(wyrazy[4]);
             int numerKarty = Integer.parseInt(wyrazy[2]);
             double stanKarty = Double.parseDouble(wyrazy[3]);
-
-            Osoba osobaTest = new Osoba(); //Tworze testowa osobe i dodaje ja do listy
-            osoby.add(osobaTest);          //dlatego ze nie wejdzie do foreacha w pustej liscie
-
-            for (Osoba osoba : osoby) {
-                if (!Objects.equals(osobaTest.getImie(), wyrazy[0]) && Objects.equals(osobaTest.getNazwisko(), wyrazy[1])) {
-                    Osoba osoba1 = new Osoba(wyrazy[0], wyrazy[1], new ArrayList<>());
-                    osoby.add(osoba1);
+            boolean co =false;
+            for (int i = 0; i < osoby.size(); i++) {
+                String imie = osoby.get(i).getImie();
+                String nazwisko = osoby.get(i).getNazwisko();
+                if (imie.equals(wyrazy[0])  && nazwisko.equals(wyrazy[1])) {
+                    co = true;
+                    switch (rodzajKarty) {
+                        case 1:
+                            KartaBankomatowa kartaBankomatowa = new KartaBankomatowa(numerKarty, stanKarty);
+                            osoby.get(i).dodajKarte(kartaBankomatowa);
+                            break;
+                        case 2:
+                            KartaDebetowa kartaDebetowa = new KartaDebetowa(numerKarty, stanKarty);
+                            osoby.get(i).dodajKarte(kartaDebetowa);
+                            break;
+                        case 3:
+                            KartaKredytowa kartaKredytowa = new KartaKredytowa(numerKarty, stanKarty);
+                            osoby.get(i).dodajKarte(kartaKredytowa);
+                            break;
+                    }
                 }
+            }
+            if (co == false) {
+                Osoba nowaOsoba = new Osoba(wyrazy[0], wyrazy[1]);
                 switch (rodzajKarty) {
                     case 1:
                         KartaBankomatowa kartaBankomatowa = new KartaBankomatowa(numerKarty, stanKarty);
-                        osoba.dodajKarte(kartaBankomatowa);
+                        nowaOsoba.dodajKarte(kartaBankomatowa);
                         break;
                     case 2:
                         KartaDebetowa kartaDebetowa = new KartaDebetowa(numerKarty, stanKarty);
-                        osoba.dodajKarte(kartaDebetowa);
+                        nowaOsoba.dodajKarte(kartaDebetowa);
                         break;
                     case 3:
                         KartaKredytowa kartaKredytowa = new KartaKredytowa(numerKarty, stanKarty);
-                        osoba.dodajKarte(kartaKredytowa);
+                        nowaOsoba.dodajKarte(kartaKredytowa);
                         break;
                 }
+                osoby.add(nowaOsoba);
             }
         }
     }
@@ -92,7 +109,7 @@ public class Bank {
         }
     }
 
-    public List<Osoba> getOsoby() {
+    public ArrayList<Osoba> getOsoby() {
         return osoby;
     }
 
