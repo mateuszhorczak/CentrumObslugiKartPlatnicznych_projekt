@@ -1,11 +1,12 @@
 package com.github.mateuszhorczak;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Centrum {
-    private List<Wpis> archiwum;
-    private List<KlientCentrum> klienciCentrum;
-    private List<Bank> banki;
+    private ArrayList<Wpis> archiwum;
+    private ArrayList<KlientCentrum> klienciCentrum;
+    private ArrayList<Bank> banki;
 
     public void dodajWpis(Wpis wpis){
         archiwum.add(wpis);
@@ -77,7 +78,7 @@ public class Centrum {
         return false;
     }
 
-    public List<Wpis> getArchiwum() {
+    public ArrayList<Wpis> getArchiwum() {
         return archiwum;
     }
 

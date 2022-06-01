@@ -9,14 +9,6 @@ public abstract class Karta {
         this.stanKarty = stanKarty;
     }
 
-    public Karta(Karta karta) {
-        numerKarty = karta.numerKarty;
-        stanKarty = karta.stanKarty;
-    }
-
-    public Karta() {
-    }
-
     public int getNumerKarty() {
         return numerKarty;
     }
