@@ -18,51 +18,33 @@ public class Bank {
     public boolean wczytajDane() throws IOException {
         File plik = new File("dane.txt");
         Scanner scannerZPliku = new Scanner(plik);
-        while(scannerZPliku.hasNext()){
+        Osoba osobaTest = new Osoba();
+        osoby.add(osobaTest);
+        while(scannerZPliku.hasNext()) {
             String linia = scannerZPliku.nextLine();
             String[] wyrazy = linia.split(" ");
             int rodzajKarty = Integer.parseInt(wyrazy[4]);
             int numerKarty = Integer.parseInt(wyrazy[2]);
             double stanKarty = Double.parseDouble(wyrazy[3]);
-            if (rodzajKarty == 1){
-                KartaBankomatowa kartaBankomatowa = new KartaBankomatowa(numerKarty, stanKarty);
-                Osoba osobaTest = new Osoba();
-                osoby.add(osobaTest);
-                for (Osoba osoba: osoby) {
-                    if (Objects.equals(osoba.getImie(), wyrazy[0]) && Objects.equals(osoba.getNazwisko(), wyrazy[1])){
+
+            for (Osoba osoba : osoby) {
+                if (!Objects.equals(osoba.getImie(), wyrazy[0]) && Objects.equals(osoba.getNazwisko(), wyrazy[1])) {
+                    Osoba osoba1 = new Osoba(wyrazy[0], wyrazy[1], new ArrayList<>());
+                    osoby.add(osoba1);
+                }
+                switch (rodzajKarty) {
+                    case 1:
+                        KartaBankomatowa kartaBankomatowa = new KartaBankomatowa(numerKarty, stanKarty);
                         osoba.dodajKarte(kartaBankomatowa);
-                    }
-                    else{
-                        Osoba osoba1 = new Osoba(wyrazy[0],wyrazy[1],new ArrayList<>());
-                        osoba1.dodajKarte(kartaBankomatowa);
-                        osoby.add(osoba1);
-                    }
-                }
-            }
-            if (rodzajKarty == 2){
-                KartaDebetowa kartaDebetowa = new KartaDebetowa(numerKarty, stanKarty);
-                for (Osoba osoba : osoby){
-                    if (Objects.equals(osoba.getImie(), wyrazy[0]) && Objects.equals(osoba.getNazwisko(), wyrazy[1])){
+                        break;
+                    case 2:
+                        KartaDebetowa kartaDebetowa = new KartaDebetowa(numerKarty, stanKarty);
                         osoba.dodajKarte(kartaDebetowa);
-                    }
-                    else{
-                        Osoba osoba1 = new Osoba(wyrazy[0],wyrazy[1],new ArrayList<>());
-                        osoba1.dodajKarte(kartaDebetowa);
-                        osoby.add(osoba1);
-                    }
-                }
-            }
-            if (rodzajKarty == 3){
-                KartaKredytowa kartaKredytowa = new KartaKredytowa(numerKarty,stanKarty);
-                for (Osoba osoba: osoby){
-                    if (Objects.equals(osoba.getImie(), wyrazy[0]) && Objects.equals(osoba.getNazwisko(), wyrazy[1])){
+                        break;
+                    case 3:
+                        KartaKredytowa kartaKredytowa = new KartaKredytowa(numerKarty,stanKarty);
                         osoba.dodajKarte(kartaKredytowa);
-                    }
-                    else{
-                        Osoba osoba1 = new Osoba(wyrazy[0],wyrazy[1],new ArrayList<>());
-                        osoba1.dodajKarte(kartaKredytowa);
-                        osoby.add(osoba1);
-                    }
+                        break;
                 }
             }
         }
