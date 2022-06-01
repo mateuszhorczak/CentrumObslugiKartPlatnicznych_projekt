@@ -49,8 +49,6 @@ public class Main {
             kartyy.add(kartaa);
             Osoba osobaTest = new Osoba("df","sfa",kartyy);
             bank.dodajOsobe(osobaTest);
-            boolean takCzyNie = bank.wczytajDane();
-            System.out.println(takCzyNie);
 
             Scanner scanner = new Scanner(System.in);
 
