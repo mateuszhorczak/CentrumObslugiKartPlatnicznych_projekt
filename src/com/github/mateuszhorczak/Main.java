@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws IOException {
-        Bank bank = new Bank();
-        bank.wczytajDane();
-        ArrayList<Osoba> osoby = bank.getOsoby();
+        Bank bank1 = new Bank("Bank1");
+        bank1.wczytajDane("dane1.txt");
+        Bank bank2 = new Bank("Bank2");
+        bank2.wczytajDane("dane2.txt");
+        Bank bank3 = new Bank("Bank3");
+        bank3.wczytajDane("dane3.txt");
+        ArrayList<Osoba> osoby = bank1.getOsoby();
         int i=1;
         for(Osoba osoba: osoby){
             System.out.println("Osoba numer: " + i);
@@ -18,6 +22,8 @@ public class Main {
             }
             i++;
         }
+
+        Bank bank = new Bank("testowy");
 
         while(true) {
             //System.out.println("W jakim miejscu chcesz zrealizowac platnosc");

@@ -6,17 +6,16 @@ import java.util.Scanner;
 
 public class Bank {
     private ArrayList<Osoba> osoby;
+    private String nazwaBanku;
     private Karta tempKarta;
 
-    public Bank() {
+    public Bank(String nazwaBanku) {
+        this.nazwaBanku = nazwaBanku;
         this.osoby = new ArrayList<>();
     }
 
-    public void  wczytajDane() throws IOException {
-        System.out.println("Podaj nazwe pliku z danymi o osobach: ");
-        Scanner scanner = new Scanner(System.in);
-        String nazwa_pliku = scanner.nextLine();
-        File plik = new File(nazwa_pliku);
+    public void  wczytajDane(String nazwaPliku) throws IOException {
+        File plik = new File(nazwaPliku);
         Scanner scannerZPliku = new Scanner(plik);
         while (scannerZPliku.hasNext()) {
             String linia = scannerZPliku.nextLine();
@@ -24,12 +23,12 @@ public class Bank {
             int rodzajKarty = Integer.parseInt(wyrazy[4]);
             int numerKarty = Integer.parseInt(wyrazy[2]);
             double stanKarty = Double.parseDouble(wyrazy[3]);
-            boolean co =false;
+            boolean x =false;
             for (int i = 0; i < osoby.size(); i++) {
                 String imie = osoby.get(i).getImie();
                 String nazwisko = osoby.get(i).getNazwisko();
                 if (imie.equals(wyrazy[0])  && nazwisko.equals(wyrazy[1])) {
-                    co = true;
+                    x = true;
                     switch (rodzajKarty) {
                         case 1:
                             KartaBankomatowa kartaBankomatowa = new KartaBankomatowa(numerKarty, stanKarty);
@@ -46,7 +45,7 @@ public class Bank {
                     }
                 }
             }
-            if (co == false) {
+            if (x == false) {
                 Osoba nowaOsoba = new Osoba(wyrazy[0], wyrazy[1]);
                 switch (rodzajKarty) {
                     case 1:
