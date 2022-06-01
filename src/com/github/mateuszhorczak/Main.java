@@ -41,12 +41,17 @@ public class Main {
             int choice, choice2,  value, numerKarty;
             double kwota, rozmiarDebetu;
             String imie, nazwisko, nazwaSklepu;
-            Bank bank = new Bank (new ArrayList<>());
 
 
-
+            Bank bank = new Bank(new ArrayList<>());
+            ArrayList<Karta> kartyy = new ArrayList<>();
+            KartaDebetowa kartaa = new KartaDebetowa(30,40);
+            kartyy.add(kartaa);
+            Osoba osobaTest = new Osoba("df","sfa",kartyy);
+            bank.dodajOsobe(osobaTest);
             boolean takCzyNie = bank.wczytajDane();
             System.out.println(takCzyNie);
+
             Scanner scanner = new Scanner(System.in);
 
             while (true) {
