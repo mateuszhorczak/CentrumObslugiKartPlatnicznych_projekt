@@ -1,7 +1,10 @@
 package com.github.mateuszhorczak;
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
+import java.util.Date;
 import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) throws IOException {
         Bank bank1 = new Bank("Bank1");
@@ -10,168 +13,84 @@ public class Main {
         bank2.wczytajDane("dane2.txt");
         Bank bank3 = new Bank("Bank3");
         bank3.wczytajDane("dane3.txt");
-        ArrayList<Osoba> osoby = bank1.getOsoby();
-        int i=1;
-        for(Osoba osoba: osoby){
-            System.out.println("Osoba numer: " + i);
-            System.out.println(osoba.getImie());
-            System.out.println(osoba.getNazwisko());
-            for (Karta karta: osoba.getKarty()){
-                System.out.println(karta.getNumerKarty());
-                System.out.println(karta.getStanKarty());
+        Centrum centrum = new Centrum();
+        centrum.dodajBank(bank1);
+        centrum.dodajBank(bank2);
+        centrum.dodajBank(bank3);
+
+        File plik2 = new File("archiwum.txt");
+        plik2.createNewFile();
+        PrintWriter zapiszDoPliku = new PrintWriter("archiwum.txt");
+
+        while(true){
+            Scanner scannerKlawiatura = new Scanner(System.in);
+            Scanner scannerKlawiatura1 = new Scanner(System.in);
+            System.out.println("Witaj, co chcesz zrobić?");
+            System.out.println("1 - Zrealizowac platnosc");
+            System.out.println("2 - Skorzystac z uslug banku");
+            System.out.println("3 - Wejsc w tryb serwisanta");
+            System.out.println("4 - Rozmyslilem się - nie chce nic");
+            int x = scannerKlawiatura.nextInt();
+            if(x == 4){
+                break;
             }
-            i++;
-        }
-
-        Bank bank = new Bank("testowy");
-
-        while(true) {
-            //System.out.println("W jakim miejscu chcesz zrealizowac platnosc");
-            //wyswietl
-            //sklep, firma, cos 1 - 2 - 3 switche
-            //
-            //Wybierz rodzaj karty
-            //podaj numer karty, (opcjonalnie)imie i nazwisko
-            //wyswietlaja sie uslugi i cennim
-            //podaj usluge
-            //sprawdza czy masz kase
-            //jesli masz to potwierdza platnosc, jesli nie to odrzuca
-
-
-
-            //Tryb serwisanta
-            //Zaloz konto w banku
-            //Podaj imie, nazwisko, kwote jaka chcesz wplacic na konto
-            //podaj rodzaj karty
-            //dostajesz wygenerowany numer konta z przypisana kwota
-
-            //usun konto w banku
-            //usuwa karte z kolekcji o danym numerze
-
-            //dodaje wpis z transkakcji do archwium
-
-            Centrum centrum = new Centrum();
-            /*
-            //Tu bedzie wczytywanie danych z bazy do zmiennej centrum
-            */
-
-            int choice, choice2,  value, numerKarty;
-            double kwota, rozmiarDebetu;
-            String imie, nazwisko, nazwaSklepu;
-
-
-            Scanner scanner = new Scanner(System.in);
-
-            while (true) {
-                System.out.println("Witaj uzytkowniku gdzie chcesz sie udac??");
-                System.out.println("Do banku: 1");
-                System.out.println("Do jakiegos sklepu, pokaz liste sklepow: 2");
-                System.out.println("Chce wejsc w tryb serwisanta: 3");
-                System.out.println("Ide do domu: 0");
-
-                choice = scanner.nextInt();
-                switch (choice) {
-                    case 0: //Koniec programu
-                        System.out.println("Do widzenia!");
-                        return;
-
-                    case 1: //Bank
-                            //Wydaje mi sie ze jest skonczony
-                            //Nie ma jeszcze napewno zadnych (o ile tu sa potrzebne)
-                            //wysylania zapytan
-                        System.out.println("Do ktorego banku chcesz sie udac? " +
-                                "\n" + "Podaj index (zaczyna sie od 0)");
-                        centrum.wypiszBanki();
-                        value = scanner.nextInt();
-                        if (value <= centrum.iloscBankow(centrum) && value >= 0) {
-                            bank = centrum.getBanki().get(value);
-                            System.out.println("Witaj w banku, co chcesz zrobic?");
-                            System.out.println("Chce wplacic pieniadze: 1");
-                            System.out.println("Chce wyplacic pieniadze: 2");
-                            System.out.println("Chce zalozyc nowa karte: 3");
-                            System.out.println("Ide gdzies indziej: 0");
-                            value = scanner.nextInt();
-                            switch (value) {
-                                case 0:
-                                    break;
-                                case 1:
-                                    System.out.println("Podaj numer karty");
-                                    numerKarty = scanner.nextInt();
-                                    System.out.println("Podaj Kwote");
-                                    kwota = scanner.nextDouble();
-                                    bank.wplac(numerKarty, kwota);
-                                    break;
-                                case 2:
-                                    System.out.println("Podaj numer karty");
-                                    numerKarty = scanner.nextInt();
-                                    System.out.println("Podaj Kwote");
-                                    kwota = scanner.nextDouble();
-                                    bank.wyplac(numerKarty, kwota);
-                                    break;
-                                case 3:
-                                    System.out.println("Podaj imie");
-                                    imie = scanner.next();
-                                    System.out.println("Podaj nazwisko");
-                                    nazwisko = scanner.next();
-                                    Osoba osoba = bank.znajdzOsobe(imie, nazwisko);
-                                    if (osoba != null) {
-                                        System.out.println("Podaj numer karty, musi byc unikalny w tym banku");
-                                        numerKarty = scanner.nextInt();
-                                        if (centrum.czyNumerKartyJestZajety(numerKarty)) {
-                                            System.out.println("Ten numer jest juz zajety!!!");
-                                            break;
-                                        }
-                                        System.out.println("Podaj Kwote");
-                                        kwota = scanner.nextDouble();
-                                        System.out.println("Jaka chcesz zalozyc karte? " +
-                                                "\n" +
-                                                "Kredytowa[1], Debetowa[2], Bankomatowa[3]");
-                                        choice2 = scanner.nextInt();
-                                        switch (choice2) {
-                                            case 1:
-                                                Karta kartaKredytowa = new KartaKredytowa(numerKarty, kwota);
-                                                osoba.dodajKarte(kartaKredytowa);
-                                                break;
-                                            case 2:
-                                                Karta kartaDebetowa = new KartaDebetowa(numerKarty, kwota);
-                                                osoba.dodajKarte(kartaDebetowa);
-                                                break;
-                                            case 3:
-                                                Karta kartaBankomatowa = new KartaBankomatowa(numerKarty, kwota);
-                                                osoba.dodajKarte(kartaBankomatowa);
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                    }
+            switch(x){
+                case 1:
+                    System.out.println("Gdzie chcesz zrealizowac platnosc?");
+                    System.out.println("1 - Sklep");
+                    System.out.println("2 - Firma Transportowa");
+                    System.out.println("3 - Zaklad Uslugowy");
+                    System.out.println("4 - Rozmyslilem się - nie chce nic");
+                    int y = scannerKlawiatura.nextInt();
+                    int numerKarty;
+                    int kwota;
+                    switch (y){
+                        case 1:
+                            System.out.println("Podaj nazwe sklepu: ");
+                            String nazwaSklepu = scannerKlawiatura1.nextLine();
+                            Sklep sklep = new Sklep(nazwaSklepu);
+                            System.out.println("Podaj numerKarty: ");
+                            numerKarty = scannerKlawiatura.nextInt();
+                            System.out.println("Podaj kwote: ");
+                            kwota = scannerKlawiatura.nextInt();
+                            boolean czyIstnieje = centrum.znajdzNumerKarty(numerKarty);
+                            if(czyIstnieje == false){
+                                Date aktualnaData = new Date();
+                                Wpis wpis = new Wpis(aktualnaData, kwota,sklep,false );
+                                centrum.dodajWpis(wpis);
+                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis));
+                                System.out.println("Podany numer karty nie istnieje");
                                 break;
                             }
-                        }
-                        else {
-                            System.out.println("Podano zly indeks banku");
-                            break;
-                        }
-                        break;
+                            Karta karta = centrum.znajdzKarte(numerKarty);
+                            if(!(karta instanceof KartaBankomatowa)) {
+                                boolean czyZrealizowana = karta.platnosc(kwota);
+                                if(czyZrealizowana == true) {
+                                    System.out.println("Platnosc zrealizowana pomyslnie! ");
+                                }
+                                Date aktualnaData = new Date();
+                                Wpis wpis = new Wpis(centrum.znajdzOsobe(numerKarty), aktualnaData, kwota, karta, sklep,centrum.znajdzBank(numerKarty),czyZrealizowana);
+                                centrum.dodajWpis(wpis);
+                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis));
+                                break;
+                            }
+                            else{
+                                Date aktualnaData = new Date();
+                                Wpis wpis = new Wpis(centrum.znajdzOsobe(numerKarty), aktualnaData, kwota, karta, sklep,centrum.znajdzBank(numerKarty),false);
+                                centrum.dodajWpis(wpis);
+                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis));
+                                System.out.println("Przepraszamy - nie da sie zaplacic karta bankomatowa");
+                                break;
+                            }
 
-                    case 2: //Sklepy
-                        centrum.wypiszKlientowCentrum();
-                        System.out.println("Ktory sklep wybierasz? Podaj indeks (zaczyna sie od 0)");
-                        value = scanner.nextInt();
-                        /* Tu trzeba jakos uzyskac nazwe klasy klienta centrum co by podac do
-                        // obiektu Wpis informacje, moze metoda .getclass pomoze, sprawdzic trzeba
-                        //
-                        //if (value <= centrum.iloscSklepow(centrum) && value >= 0) {
-                        //    for ()
-                        //    nazwaSklepu = instanceof centrum.getKlienciCentrum().get(value);
-                        //}
-                        */
-                        break;
-
-                }
-
-
+                    }
+                    break;
+                case 2:
+                case 3:
+                case 4:
             }
-        }
 
+        }
+        centrum.wypiszWpisy();
     }
 }

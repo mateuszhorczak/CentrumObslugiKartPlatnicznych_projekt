@@ -66,6 +66,10 @@ public class Bank {
         }
     }
 
+    public String pobierzNazwe(){
+        return nazwaBanku;
+    }
+
     public boolean czyNalezyOsobaDoBanku(int numerPodany) {
         for (var item : osoby) {
             for (var item2 : item.getKarty()) {

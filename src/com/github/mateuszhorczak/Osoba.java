@@ -11,9 +11,7 @@ public class Osoba {
         this.karty = new ArrayList<>();
     }
 
-    public Osoba() {
-
-    }
+    public Osoba() {}
 
     public int zliczKarty() {
         int i = 0;
