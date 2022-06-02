@@ -1,0 +1,22 @@
+Imie: Norbert
+Nazwisko: Andrzejewski
+Data: Thu Jun 02 17:46:57 CEST 2022
+Kwota: 340.0
+Numer Karty: 111111
+Rodzaj Karty: Karta Debetowa
+Rodzaj Firmy: Sklep
+Nazwa Firmy: Zabawkowy
+Nazwa banku: Bank1
+Powodzenie transakcji: true
+****************************************
+Imie: Zuzanna
+Nazwisko: Zielinska
+Data: Thu Jun 02 17:47:27 CEST 2022
+Kwota: 200.0
+Numer Karty: 872345
+Rodzaj Karty: Karta Kredytowa
+Rodzaj Firmy: Sklep
+Nazwa Firmy: Drukarski
+Nazwa banku: Bank3
+Powodzenie transakcji: true
+****************************************

@@ -103,10 +103,10 @@ public class Centrum {
             }
             powodzenieTransakcji = "Powodzenie transakcji: " + wpis.getPowodzenieTranskacji();
             if (imie == null && nazwisko == null && numerKarty == null && rodzajKarty ==null && nazwaBanku == null){
-                return (data + kwota + rodzajFirmy + nazwaFirmy + powodzenieTransakcji);
+                return data+"\n"+ kwota +"\n"+ rodzajFirmy +"\n"+ nazwaFirmy +"\n"+ powodzenieTransakcji+"\n"+"****************************************\n";
             }
             else {
-                return (imie + nazwisko + data + kwota + numerKarty + rodzajKarty + rodzajFirmy + nazwaFirmy +nazwaBanku+powodzenieTransakcji);
+                return (imie +"\n"+ nazwisko +"\n"+ data +"\n"+ kwota +"\n"+ numerKarty +"\n"+ rodzajKarty +"\n"+ rodzajFirmy +"\n"+ nazwaFirmy +"\n"+nazwaBanku+"\n"+powodzenieTransakcji+"\n"+"****************************************\n");
             }
 
     }

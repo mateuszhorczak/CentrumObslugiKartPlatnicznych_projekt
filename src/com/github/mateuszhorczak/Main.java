@@ -92,5 +92,6 @@ public class Main {
 
         }
         centrum.wypiszWpisy();
+        zapiszDoPliku.close();
     }
 }
