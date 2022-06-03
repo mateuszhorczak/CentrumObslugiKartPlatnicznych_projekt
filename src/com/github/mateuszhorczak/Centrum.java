@@ -1,7 +1,7 @@
 package com.github.mateuszhorczak;
 import java.util.ArrayList;
 import java.util.Objects;
-
+//elo
 public class Centrum {
     private ArrayList<Wpis> archiwum;
     private ArrayList<KlientCentrum> klienciCentrum;

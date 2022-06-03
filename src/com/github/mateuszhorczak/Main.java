@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
-
+//elo
 public class Main {
     public static void main(String[] args) throws IOException {
         Bank bank1 = new Bank("Bank1");
@@ -210,6 +210,7 @@ public class Main {
         bank1.zapiszDane("dane1.txt");
         bank2.zapiszDane("dane2.txt");
         bank3.zapiszDane("dane3.txt");
+
         zapiszDoPliku.close();
     }
 }

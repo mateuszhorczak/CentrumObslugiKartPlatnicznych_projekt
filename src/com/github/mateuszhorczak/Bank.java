@@ -9,7 +9,7 @@ public class Bank {
     private ArrayList<Osoba> osoby;
     private String nazwaBanku;
     private Karta tempKarta;
-
+// elo
     public Bank(String nazwaBanku) {
         this.nazwaBanku = nazwaBanku;
         this.osoby = new ArrayList<>();
