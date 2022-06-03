@@ -16,7 +16,7 @@ public abstract class Karta {
         return stanKarty;
     }
 
-    public boolean platnosc(int kwota){
+    public boolean platnosc(double kwota){
         if (stanKarty >= kwota) {
             stanKarty = stanKarty - kwota;
             return true;

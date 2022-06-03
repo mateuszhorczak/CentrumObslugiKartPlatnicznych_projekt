@@ -43,6 +43,9 @@ public class Centrum {
                 if (item.getKarta() instanceof KartaDebetowa) {
                     System.out.println("Rodzaj Karty: Karta Debetowa");
                 }
+                if (item.getKarta() instanceof KartaBankomatowa) {
+                    System.out.println("Rodzaj Karty: Karta Bankomatowa");
+                }
             }
             if(item.getKlientCentrum() !=null) {
                 if (item.getKlientCentrum() instanceof Sklep) {
@@ -62,7 +65,7 @@ public class Centrum {
                 System.out.println("Nazwa banku: " + item.getBank().pobierzNazwe());
             }
             System.out.println("Powodzenie transakcji: " + item.getPowodzenieTranskacji());
-            System.out.println("****************************************");
+            System.out.println("******************** ********************");
         }
 
     }
@@ -83,6 +86,9 @@ public class Centrum {
                 if (wpis.getKarta() instanceof KartaDebetowa) {
                     rodzajKarty = "Rodzaj Karty: Karta Debetowa";
                 }
+                if (wpis.getKarta() instanceof KartaBankomatowa) {
+                    rodzajKarty = "Rodzaj Karty: Karta Bankomatowa";
+                }
             }
             if(wpis.getKlientCentrum() !=null) {
                 if (wpis.getKlientCentrum() instanceof Sklep) {
@@ -91,23 +97,19 @@ public class Centrum {
                 }
                 if (wpis.getKlientCentrum() instanceof FirmaTransportowa) {
                     rodzajFirmy = "Rodzaj Firmy: Firma Transportowa";
-                    nazwaBanku = "Nazwa Firmy: " + wpis.getKlientCentrum().getNazwa_Firmy();
+                    nazwaFirmy = "Nazwa Firmy: " + wpis.getKlientCentrum().getNazwa_Firmy();
                 }
                 if (wpis.getKlientCentrum() instanceof ZakladUslugowy) {
                     rodzajFirmy = "Rodzaj Firmy: Zaklad Uslugowy";
-                    nazwaBanku = "Nazwa Firmy: " + wpis.getKlientCentrum().getNazwa_Firmy();
+                    nazwaFirmy = "Nazwa Firmy: " + wpis.getKlientCentrum().getNazwa_Firmy();
                 }
             }
             if (wpis.getBank() != null) {
                 nazwaBanku = "Nazwa banku: " + wpis.getBank().pobierzNazwe();
             }
             powodzenieTransakcji = "Powodzenie transakcji: " + wpis.getPowodzenieTranskacji();
-            if (imie == null && nazwisko == null && numerKarty == null && rodzajKarty ==null && nazwaBanku == null){
-                return data+"\n"+ kwota +"\n"+ rodzajFirmy +"\n"+ nazwaFirmy +"\n"+ powodzenieTransakcji+"\n"+"****************************************\n";
-            }
-            else {
-                return (imie +"\n"+ nazwisko +"\n"+ data +"\n"+ kwota +"\n"+ numerKarty +"\n"+ rodzajKarty +"\n"+ rodzajFirmy +"\n"+ nazwaFirmy +"\n"+nazwaBanku+"\n"+powodzenieTransakcji+"\n"+"****************************************\n");
-            }
+
+            return (imie +"\n"+ nazwisko +"\n"+ data +"\n"+ kwota +"\n"+ numerKarty +"\n"+ rodzajKarty +"\n"+ rodzajFirmy +"\n"+ nazwaFirmy +"\n"+nazwaBanku+"\n"+powodzenieTransakcji+"\n"+"******************** ********************\n");
 
     }
 

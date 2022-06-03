@@ -1,6 +1,7 @@
 package com.github.mateuszhorczak;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -64,6 +65,32 @@ public class Bank {
                 osoby.add(nowaOsoba);
             }
         }
+    }
+
+    public void zapiszDane(String nazwaPliku) throws IOException {
+        int i;
+        File plik = new File(nazwaPliku);
+        plik.createNewFile();
+        PrintWriter zapiszDoPliku = new PrintWriter(plik);
+        for(Osoba osoba: osoby){
+            for(Karta karta: osoba.getKarty()) {
+                zapiszDoPliku.printf(osoba.getImie() + " ");
+                zapiszDoPliku.printf(osoba.getNazwisko() + " ");
+                zapiszDoPliku.printf(karta.getNumerKarty() + " ");
+                zapiszDoPliku.printf(karta.getStanKarty() + " ");
+                if(karta instanceof KartaBankomatowa){
+                    zapiszDoPliku.printf("1");
+                }
+                if(karta instanceof KartaDebetowa){
+                    zapiszDoPliku.printf("2");
+                }
+                if(karta instanceof KartaKredytowa){
+                    zapiszDoPliku.printf("3");
+                }
+                zapiszDoPliku.printf("\n");
+            }
+        }
+        zapiszDoPliku.close();
     }
 
     public String pobierzNazwe(){
