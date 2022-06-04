@@ -1,4 +1,5 @@
 package com.github.mateuszhorczak;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -6,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Bank {
-    private ArrayList<Osoba> osoby;
-    private String nazwaBanku;
+    private final ArrayList<Osoba> osoby;
+    private final String nazwaBanku;
 
     public Bank(String nazwaBanku) {
         this.nazwaBanku = nazwaBanku;
@@ -59,10 +60,13 @@ public class Bank {
 
     public void zapiszDane(String nazwaPliku) throws IOException {
         File plik = new File(nazwaPliku);
-        plik.createNewFile();
+        if (!plik.createNewFile()) {
+            System.out.println("Problem z plikiem");
+            return;
+        }
         PrintWriter zapiszDoPliku = new PrintWriter(plik);
         for (Osoba osoba : osoby) {
-            for (Karta karta: osoba.getKarty()) {
+            for (Karta karta : osoba.getKarty()) {
                 zapiszDoPliku.printf(osoba.getImie() + " ");
                 zapiszDoPliku.printf(osoba.getNazwisko() + " ");
                 zapiszDoPliku.printf(karta.getNumerKarty() + " ");
@@ -82,7 +86,7 @@ public class Bank {
         zapiszDoPliku.close();
     }
 
-    public String pobierzNazwe(){
+    public String pobierzNazwe() {
         return nazwaBanku;
     }
 
@@ -97,28 +101,26 @@ public class Bank {
         return false;
     }
 
-    public Osoba znajdzOsobe(String imie, String nazwisko) {
+    public Osoba znajdzOsobe(String imie, String nazwisko) throws PersonDoesNotExistException {
         for (var item : osoby) {
             if (imie.equalsIgnoreCase(item.getImie()) && nazwisko.equalsIgnoreCase(item.getNazwisko())) {
                 return item;
             }
         }
-        return null;
+        throw new PersonDoesNotExistException();
     }
 
 
-    public boolean wplac(int numerPodany, double kwota) throws CardNotFoundException {
+    public void wplac(int numerPodany, double kwota) throws CardNotFoundException {
         Karta karta = wezKarte(numerPodany);
 
         if (czyNalezyOsobaDoBanku(numerPodany)) {
             karta.setStanKarty(karta.getStanKarty() + kwota);
-            return true;
         }
 
-        return false;
     }
 
-    public boolean wyplac(int numerPodany, double kwota) throws CardNotFoundException, InvalidCardDataException {
+    public void wyplac(int numerPodany, double kwota) throws CardNotFoundException, InvalidCardDataException {
         Karta karta = wezKarte(numerPodany);
 
         if (karta.getStanKarty() - kwota < 0) {
@@ -127,10 +129,7 @@ public class Bank {
 
         if (czyNalezyOsobaDoBanku(numerPodany)) {
             karta.setStanKarty(karta.getStanKarty() - kwota);
-            return true;
         }
-
-        return false;
     }
 
     private Karta wezKarte(int numerPodany) throws CardNotFoundException {
@@ -149,7 +148,10 @@ public class Bank {
         return osoby;
     }
 
-    public void dodajOsobe(Osoba osoba){
+    public void dodajOsobe(Osoba osoba) {
+        if (osoby.contains(osoba)) {
+            return;
+        }
         osoby.add(osoba);
     }
 }

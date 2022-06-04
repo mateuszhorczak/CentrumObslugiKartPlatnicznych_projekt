@@ -5,9 +5,9 @@ import java.util.Objects;
 
 //elo
 public class Centrum {
-    private ArrayList<Wpis> archiwum;
-    private ArrayList<KlientCentrum> klienciCentrum;
-    private ArrayList<Bank> banki;
+    private final ArrayList<Wpis> archiwum;
+    private final ArrayList<KlientCentrum> klienciCentrum;
+    private final ArrayList<Bank> banki;
 
     public Centrum() {
         archiwum = new ArrayList<>();
@@ -20,8 +20,9 @@ public class Centrum {
     }
 
     public void wypiszBanki() {
+        int i = 0;
         for (var item : banki) {
-            System.out.println(item.pobierzNazwe());
+            System.out.println(item.pobierzNazwe() + " index: " + i++);
         }
     }
 
@@ -52,15 +53,15 @@ public class Centrum {
             if (item.getKlientCentrum() != null) {
                 if (item.getKlientCentrum() instanceof Sklep) {
                     System.out.println("Rodzaj Firmy: Sklep");
-                    System.out.println("Nazwa Firmy: " + item.getKlientCentrum().getNazwa_Firmy());
+                    System.out.println("Nazwa Firmy: " + item.getKlientCentrum().getNazwaFirmy());
                 }
                 if (item.getKlientCentrum() instanceof FirmaTransportowa) {
                     System.out.println("Rodzaj Firmy: Firma Transportowa");
-                    System.out.println("Nazwa Firmy: " + item.getKlientCentrum().getNazwa_Firmy());
+                    System.out.println("Nazwa Firmy: " + item.getKlientCentrum().getNazwaFirmy());
                 }
                 if (item.getKlientCentrum() instanceof ZakladUslugowy) {
                     System.out.println("Rodzaj Firmy: Zaklad Uslugowy");
-                    System.out.println("Nazwa Firmy: " + item.getKlientCentrum().getNazwa_Firmy());
+                    System.out.println("Nazwa Firmy: " + item.getKlientCentrum().getNazwaFirmy());
                 }
             }
             if (item.getBank() != null) {
@@ -96,6 +97,7 @@ public class Centrum {
             }
         }
         if (wpis.getKlientCentrum() != null) {
+
             if (wpis.getKlientCentrum() instanceof Sklep) {
                 rodzajFirmy = "Rodzaj Firmy: Sklep";
             }
@@ -105,7 +107,7 @@ public class Centrum {
             if (wpis.getKlientCentrum() instanceof ZakladUslugowy) {
                 rodzajFirmy = "Rodzaj Firmy: Zaklad Uslugowy";
             }
-            nazwaFirmy = "Nazwa Firmy: " + wpis.getKlientCentrum().getNazwa_Firmy();
+            nazwaFirmy = "Nazwa Firmy: " + wpis.getKlientCentrum().getNazwaFirmy();
         }
         if (wpis.getBank() != null) {
             nazwaBanku = "Nazwa banku: " + wpis.getBank().pobierzNazwe();
@@ -124,7 +126,7 @@ public class Centrum {
 
     public boolean czyIstniejeKlient(String nazwaFirmy) {
         for (var item : klienciCentrum) {
-            if (Objects.equals(item.getNazwa_Firmy(), nazwaFirmy)) {
+            if (Objects.equals(item.getNazwaFirmy(), nazwaFirmy)) {
                 return true;
             }
         }
@@ -132,7 +134,7 @@ public class Centrum {
     }
 
     public boolean dodajKlient(KlientCentrum klient) {
-        if (!czyIstniejeKlient(klient.Nazwa_Firmy)) {
+        if (!czyIstniejeKlient(klient.nazwaFirmy)) {
             klienciCentrum.add(klient);
             return true;
         }
@@ -140,7 +142,7 @@ public class Centrum {
     }
 
     public boolean usunKlient(KlientCentrum klient) {
-        if (czyIstniejeKlient(klient.Nazwa_Firmy)) {
+        if (czyIstniejeKlient(klient.nazwaFirmy)) {
             klienciCentrum.remove(klient);
             return true;
         }
@@ -149,7 +151,7 @@ public class Centrum {
 
     public void wypiszKlientow() {
         for (var item : klienciCentrum) {
-            System.out.println(item.getNazwa_Firmy());
+            System.out.println(item.getNazwaFirmy());
         }
     }
 

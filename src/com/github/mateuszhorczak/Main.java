@@ -5,10 +5,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Scanner;
 
-//elo
 public class Main {
     public static void main(String[] args) throws IOException {
         Bank bank1 = new Bank("Bank1");
@@ -30,7 +28,10 @@ public class Main {
             String linia = scannerZPliku.nextLine();
             linie.add(linia);
         }
-        plik.createNewFile();
+        if (!plik.createNewFile()) {
+            System.out.println("Problem z plikiem");
+            return;
+        }
         PrintWriter zapiszDoPliku = new PrintWriter(plik);
         for (i = 0; i < linie.size(); i++) {
             zapiszDoPliku.printf(linie.get(i));
@@ -38,155 +39,42 @@ public class Main {
         }
 
         while (true) {
-            Scanner scannerKlawiaturax = new Scanner(System.in);
-            Scanner scannerKlawiaturay = new Scanner(System.in);
-            Scanner scannerKlawiatura1 = new Scanner(System.in);
-            Scanner scannerKlawiatura11 = new Scanner(System.in);
-            Scanner scannerKlawiatura2 = new Scanner(System.in);
-            Scanner scannerKlawiatura22 = new Scanner(System.in);
-            Scanner scannerKlawiatura3 = new Scanner(System.in);
-            Scanner scannerKlawiatura33 = new Scanner(System.in);
-            Scanner scannerKlawiatura111 = new Scanner(System.in);
-            Scanner scannerKlawiatura222 = new Scanner(System.in);
-            Scanner scannerKlawiatura333 = new Scanner(System.in);
-            scannerKlawiatura111.useLocale(Locale.US);
-            scannerKlawiatura222.useLocale(Locale.US);
-            scannerKlawiatura333.useLocale(Locale.US);
+            Scanner scanner = new Scanner(System.in);
+
             System.out.println("Witaj, co chcesz zrobić?");
             System.out.println("1 - Zrealizowac platnosc");
             System.out.println("2 - Skorzystac z uslug banku");
             System.out.println("3 - Wejsc w tryb serwisanta");
             System.out.println("4 - Rozmyslilem się - nie chce nic");
-            int x = scannerKlawiaturax.nextInt();
+            int x = scanner.nextInt();
             if (x == 4) {
                 break;
             }
             switch (x) {
                 case 1:
-                    System.out.println("Gdzie chcesz zrealizowac platnosc?");
+                    System.out.println("\nGdzie chcesz zrealizowac platnosc?");
                     System.out.println("1 - Sklep");
                     System.out.println("2 - Firma Transportowa");
                     System.out.println("3 - Zaklad Uslugowy");
                     System.out.println("4 - Rozmyslilem się - nie chce nic");
-                    int y = scannerKlawiaturay.nextInt();
-                    int numerKarty1, numerKarty2, numerKarty3;
-                    double kwota1, kwota2, kwota3;
+                    int y = scanner.nextInt();
                     switch (y) {
                         case 1:
-                            System.out.println("Podaj nazwe sklepu: ");
-                            String nazwaSklepu = scannerKlawiatura11.nextLine();
-                            Sklep sklep = new Sklep(nazwaSklepu);
-                            System.out.println("Podaj numerKarty: ");
-                            numerKarty1 = scannerKlawiatura1.nextInt();
-                            System.out.println("Podaj kwote: ");
-                            kwota1 = scannerKlawiatura111.nextDouble();
-                            boolean czyIstnieje1 = centrum.czyIstniejeNumerKarty(numerKarty1);
-                            if (!czyIstnieje1) {
-                                Date aktualnaData1 = new Date();
-                                Wpis wpis1 = new Wpis(aktualnaData1, kwota1, sklep, false);
-                                centrum.dodajWpis(wpis1);
-                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis1));
-                                System.out.println("Podany numer karty nie istnieje");
-                                break;
-                            }
-                            Karta karta1 = centrum.znajdzKarte(numerKarty1);
-                            if (!(karta1 instanceof KartaBankomatowa)) {
-                                boolean czyZrealizowana1 = karta1.platnosc(kwota1);
-                                if (czyZrealizowana1) {
-                                    System.out.println("Platnosc zrealizowana pomyslnie! ");
-                                }
-                                Date aktualnaData1 = new Date();
-                                Wpis wpis1 = new Wpis(centrum.znajdzOsobePoNumerze(numerKarty1), aktualnaData1, kwota1, karta1, sklep, centrum.znajdzBankWKtorymJestTenNumerKarty(numerKarty1), czyZrealizowana1);
-                                centrum.dodajWpis(wpis1);
-                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis1));
-                                break;
-                            } else {
-                                Date aktualnaData1 = new Date();
-                                Wpis wpis1 = new Wpis(centrum.znajdzOsobePoNumerze(numerKarty1), aktualnaData1, kwota1, karta1, sklep, centrum.znajdzBankWKtorymJestTenNumerKarty(numerKarty1), false);
-                                centrum.dodajWpis(wpis1);
-                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis1));
-                                System.out.println("Przepraszamy - nie da sie zaplacic karta bankomatowa");
-                                break;
-                            }
+                            dodajKlientCentrum(centrum, zapiszDoPliku, new Sklep());
+                            break;
                         case 2:
-                            System.out.println("Podaj nazwe firmy transportowej: ");
-                            String nazwaFirmy = scannerKlawiatura2.nextLine();
-                            FirmaTransportowa firmaTransportowa = new FirmaTransportowa(nazwaFirmy);
-                            System.out.println("Podaj numerKarty: ");
-                            numerKarty2 = scannerKlawiatura22.nextInt();
-                            System.out.println("Podaj kwote: ");
-                            kwota2 = scannerKlawiatura222.nextDouble();
-                            boolean czyIstnieje2 = centrum.czyIstniejeNumerKarty(numerKarty2);
-                            if (!czyIstnieje2) {
-                                Date aktualnaData2 = new Date();
-                                Wpis wpis2 = new Wpis(aktualnaData2, kwota2, firmaTransportowa, false);
-                                centrum.dodajWpis(wpis2);
-                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis2));
-                                System.out.println("Podany numer karty nie istnieje");
-                                break;
-                            }
-                            Karta karta2 = centrum.znajdzKarte(numerKarty2);
-                            if (!(karta2 instanceof KartaBankomatowa)) {
-                                boolean czyZrealizowana2 = karta2.platnosc(kwota2);
-                                if (czyZrealizowana2) {
-                                    System.out.println("Platnosc zrealizowana pomyslnie! ");
-                                }
-                                Date aktualnaData2 = new Date();
-                                Wpis wpis2 = new Wpis(centrum.znajdzOsobePoNumerze(numerKarty2), aktualnaData2, kwota2, karta2, firmaTransportowa, centrum.znajdzBankWKtorymJestTenNumerKarty(numerKarty2), czyZrealizowana2);
-                                centrum.dodajWpis(wpis2);
-                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis2));
-                                break;
-                            } else {
-                                Date aktualnaData2 = new Date();
-                                Wpis wpis2 = new Wpis(centrum.znajdzOsobePoNumerze(numerKarty2), aktualnaData2, kwota2, karta2, firmaTransportowa, centrum.znajdzBankWKtorymJestTenNumerKarty(numerKarty2), false);
-                                centrum.dodajWpis(wpis2);
-                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis2));
-                                System.out.println("Przepraszamy - nie da sie zaplacic karta bankomatowa");
-                                break;
-                            }
+                            dodajKlientCentrum(centrum, zapiszDoPliku, new FirmaTransportowa());
+                            break;
                         case 3:
-                            System.out.println("Podaj nazwe zakladu uslugowego: ");
-                            String nazwaZakladUslugowy = scannerKlawiatura3.nextLine();
-                            ZakladUslugowy zakladUslugowy = new ZakladUslugowy(nazwaZakladUslugowy);
-                            System.out.println("Podaj numerKarty: ");
-                            numerKarty3 = scannerKlawiatura33.nextInt();
-                            System.out.println("Podaj kwote: ");
-                            kwota3 = scannerKlawiatura333.nextDouble();
-                            boolean czyIstnieje3 = centrum.czyIstniejeNumerKarty(numerKarty3);
-                            if (!czyIstnieje3) {
-                                Date aktualnaData3 = new Date();
-                                Wpis wpis3 = new Wpis(aktualnaData3, kwota3, zakladUslugowy, false);
-                                centrum.dodajWpis(wpis3);
-                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis3));
-                                System.out.println("Podany numer karty nie istnieje");
-                                break;
-                            }
-                            Karta karta3 = centrum.znajdzKarte(numerKarty3);
-                            if (!(karta3 instanceof KartaBankomatowa)) {
-                                boolean czyZrealizowana3 = karta3.platnosc(kwota3);
-                                if (czyZrealizowana3) {
-                                    System.out.println("Platnosc zrealizowana pomyslnie! ");
-                                }
-                                Date aktualnaData3 = new Date();
-                                Wpis wpis3 = new Wpis(centrum.znajdzOsobePoNumerze(numerKarty3), aktualnaData3, kwota3, karta3, zakladUslugowy, centrum.znajdzBankWKtorymJestTenNumerKarty(numerKarty3), czyZrealizowana3);
-                                centrum.dodajWpis(wpis3);
-                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis3));
-                                break;
-                            } else {
-                                Date aktualnaData3 = new Date();
-                                Wpis wpis3 = new Wpis(centrum.znajdzOsobePoNumerze(numerKarty3), aktualnaData3, kwota3, karta3, zakladUslugowy, centrum.znajdzBankWKtorymJestTenNumerKarty(numerKarty3), false);
-                                centrum.dodajWpis(wpis3);
-                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis3));
-                                System.out.println("Przepraszamy - nie da sie zaplacic karta bankomatowa");
-                                break;
-                            }
-
+                            dodajKlientCentrum(centrum, zapiszDoPliku, new ZakladUslugowy());
+                            break;
                     }
-                    break;
+
+
                 case 2:
                     System.out.println("Do ktorego banku chcesz sie udac, podaj index (zaczyna sie od 0)");
                     centrum.wypiszBanki();
-                    int numerBanku = scannerKlawiatura1.nextInt();
+                    int numerBanku = scanner.nextInt();
 
                     System.out.println("Witaj w banku!");
                     System.out.println("Co chcesz zrobic?");
@@ -194,7 +82,7 @@ public class Main {
                     System.out.println("Wyplacic pieniadze z banku: 2");
                     System.out.println("Dodac nowa karte: 3");
                     System.out.println("Wychodze z banku: 4");
-                    int z = scannerKlawiaturay.nextInt();
+                    int z = scanner.nextInt();
 
                     if (z == 4) {
                         System.out.println("Do widzenia!");
@@ -206,9 +94,9 @@ public class Main {
 
                     if (z == 1 || z == 2) {
                         System.out.println("Podaj numerKarty: ");
-                        numerKarty = scannerKlawiatura1.nextInt();
+                        numerKarty = scanner.nextInt();
                         System.out.println("Podaj kwote: ");
-                        kwota = scannerKlawiatura111.nextDouble();
+                        kwota = scanner.nextDouble();
 
                         boolean czyIstnieje = centrum.czyIstniejeNumerKarty(numerKarty);
                         if (!czyIstnieje) {
@@ -291,22 +179,23 @@ public class Main {
                             System.out.println("Karta Bankomatowa: 1");
                             System.out.println("Karta Debetowa: 2");
                             System.out.println("Karta Kredytowa: 3");
-                            int rodzajKarty = scannerKlawiatura1.nextInt();
+                            int rodzajKarty = scanner.nextInt();
 
                             System.out.println("Podaj numer karty");
-                            int nrKarty = scannerKlawiatura1.nextInt();
+                            int nrKarty = scanner.nextInt();
 
                             if (centrum.czyNumerKartyJestZajety(nrKarty)) {
+                                System.out.println("Podany numer karty jest juz zajety!");
                                 break;
                             }
 
                             System.out.println("Podaj kwote jaka chcesz wplacic lub limit karty do uzyskania");
-                            double kwotaWplacenia = scannerKlawiatura1.nextDouble();
+                            double kwotaWplacenia = scanner.nextDouble();
 
                             System.out.println("Podaj swoje imie: ");
-                            String imie = scannerKlawiatura1.next();
+                            String imie = scanner.next();
                             System.out.println("Podaj swoje nazwisko: ");
-                            String nazwisko = scannerKlawiatura1.next();
+                            String nazwisko = scanner.next();
                             Osoba osoba = centrum.znajdzOsobePoImieniuINazwisku(imie, nazwisko);
 
                             if (osoba == null) {
@@ -315,18 +204,22 @@ public class Main {
                             Bank bank = centrum.getBanki().get(numerBanku);
                             bank.dodajDobryTypKarty(rodzajKarty, nrKarty, kwotaWplacenia, osoba);
                             bank.dodajOsobe(osoba);
+
+                            Wpis wpis = new Wpis(
+                                    centrum.znajdzOsobePoNumerze(nrKarty),
+                                    new Date(),
+                                    kwotaWplacenia,
+                                    centrum.znajdzKarte(numerKarty),
+                                    bank,
+                                    true,
+                                    "Wydano nowa karte!"
+                            );
+                            centrum.dodajWpis(wpis);
+                            zapiszDoPliku.printf(centrum.pobierzWpis(wpis));
+                            System.out.println("O to twoja karta!");
                     }
-
-
-                    //Jak bedziesz robic to na biezaco testuj i nie dodawaj niepotrzebnych rzeczy
-                    //Tutaj masz zrobic switcha z uslugami banku czyli 1 - wplata, 2- wyplata,
-                    // 3- tworzenie konta czyli obiektu osoba, 4- ze wyjscie ze nie chcemy nic
-                    //Zwroc uwage jakimi kartami mozesz to zrobic bo nie jestem pewny ale chyba nie wszystkimi
-                    //Jak bys chcial sie posugerowac to wyzej zrobilem takie cos ze np bankomatowa placic nie mozna
-                    //Tutaj mozna zrobic ze np debetowa nie mozna wplacac czy tam wyplacac to tylko ptrzyklad jak cos
-                    //W sumie mozesz zrobic tak ze np zakladamy ze wyplacac i wplacac tylko bankomatowa mozemy
-                    //Ale zrob jak uwazasz aby dobrze dzialalo
                     break;
+
                 case 3:
                     //Tutaj tryb serwisanta czyli 1 - mozliwosc wyswietlenia calego calego calgo archiwum z pliku od poczatku
                     //  w tym switchu trzeba bedzie zrobic zeby mozna bylo pzrzsezukiwac te archiwum po danym parametrze
@@ -345,5 +238,87 @@ public class Main {
         bank3.zapiszDane("dane3.txt");
 
         zapiszDoPliku.close();
+    }
+
+    private static boolean czyNieIstniejeNumerKarty(Centrum centrum, PrintWriter zapiszDoPliku, double kwota2, KlientCentrum firmaTransportowa, boolean czyIstnieje2) {
+        if (czyIstnieje2) {
+            return false;
+        }
+
+        Date aktualnaData2 = new Date();
+        Wpis wpis2 = new Wpis(aktualnaData2, kwota2, firmaTransportowa, false);
+        centrum.dodajWpis(wpis2);
+        zapiszDoPliku.printf(centrum.pobierzWpis(wpis2));
+        System.out.println("Podany numer karty nie istnieje");
+        return true;
+    }
+
+    private static void czyNieBankomatowa(
+            Centrum centrum,
+            PrintWriter zapiszDoPliku,
+            int numerKarty3,
+            double kwota3,
+            KlientCentrum zakladUslugowy,
+            Karta karta3
+    ) {
+        if (!(karta3 instanceof KartaBankomatowa)) {
+            boolean czyZrealizowana3 = karta3.platnosc(kwota3);
+            if (czyZrealizowana3) {
+                System.out.println("Platnosc zrealizowana pomyslnie! ");
+            }
+            Date aktualnaData3 = new Date();
+            Wpis wpis3 = new Wpis(
+                    centrum.znajdzOsobePoNumerze(numerKarty3),
+                    aktualnaData3,
+                    kwota3,
+                    karta3,
+                    zakladUslugowy,
+                    centrum.znajdzBankWKtorymJestTenNumerKarty(numerKarty3),
+                    czyZrealizowana3
+            );
+
+            centrum.dodajWpis(wpis3);
+            zapiszDoPliku.printf(centrum.pobierzWpis(wpis3));
+            return;
+        }
+        Date aktualnaData3 = new Date();
+        Wpis wpis3 = new Wpis(centrum.znajdzOsobePoNumerze(numerKarty3),
+                aktualnaData3,
+                kwota3,
+                karta3,
+                zakladUslugowy,
+                centrum.znajdzBankWKtorymJestTenNumerKarty(numerKarty3),
+                false
+        );
+
+        centrum.dodajWpis(wpis3);
+        zapiszDoPliku.printf(centrum.pobierzWpis(wpis3));
+        System.out.println("Przepraszamy - nie da sie zaplacic karta bankomatowa");
+    }
+
+
+    public static void dodajKlientCentrum(Centrum centrum, PrintWriter printWriter, KlientCentrum klientCentrum) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Podaj nazwe zakladu uslugowego: ");
+        scanner.nextLine();
+        String nazwaKlientCentrum = scanner.nextLine();
+        klientCentrum.setNazwaFirmy(nazwaKlientCentrum);
+        System.out.println("Podaj numerKarty: ");
+        int numerKarty = scanner.nextInt();
+        System.out.println("Podaj kwote: ");
+        double kwota = scanner.nextDouble();
+
+        if (czyNieIstniejeNumerKarty(
+                centrum,
+                printWriter,
+                kwota,
+                klientCentrum,
+                centrum.czyIstniejeNumerKarty(numerKarty))
+        ) {
+            return;
+        }
+
+        Karta karta = centrum.znajdzKarte(numerKarty);
+        czyNieBankomatowa(centrum, printWriter, numerKarty, kwota, klientCentrum, karta);
     }
 }

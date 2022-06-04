@@ -1,21 +1,20 @@
-Imie: Norbert
-Nazwisko: Andrzejewski
-Data: Fri Jun 03 22:23:01 CEST 2022
-Kwota: 100.0
-Numer Karty: 111111
-Rodzaj Karty: Karta Debetowa
-Rodzaj Firmy: Sklep
-Nazwa Firmy: fhakj
+Imie: Stefan
+Nazwisko: Pierdzibak
+Data: Sat Jun 04 20:22:20 IST 2022
+Kwota: 12345.0
+null
+null
+Typ operacji: Wydano nowa karte!
 Nazwa banku: Bank1
 Powodzenie transakcji: true
 ******************** ********************
-Imie: Kaja
-Nazwisko: Wysocka
-Data: Sat Jun 04 15:29:54 IST 2022
-Kwota: 50.0
-Numer Karty: 326517
-Rodzaj Karty: Karta Kredytowa
-Typ operacji: Wyplata
-Nazwa banku: Bank2
-Powodzenie transakcji: false
+Imie: Jaroslaw
+Nazwisko: Kaczynski
+Data: Sat Jun 04 20:29:54 IST 2022
+Kwota: 10000.0
+null
+null
+Typ operacji: Wydano nowa karte!
+Nazwa banku: Bank3
+Powodzenie transakcji: true
 ******************** ********************
