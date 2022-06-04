@@ -1,12 +1,21 @@
 package com.github.mateuszhorczak;
 
 public abstract class KlientCentrum {
-    String Nazwa_Firmy;
+    protected String nazwaFirmy;
 
-    public KlientCentrum(String Nazwa_Firmy) {
-        this.Nazwa_Firmy = Nazwa_Firmy;
+    public KlientCentrum(String nazwaFirmy) {
+        this.nazwaFirmy = nazwaFirmy;
     }
-    public String getNazwa_Firmy(){
-        return Nazwa_Firmy;
+
+    public String getNazwaFirmy() {
+        return nazwaFirmy;
     }
+
+    public KlientCentrum() {
+    }
+
+    public void setNazwaFirmy(String nazwaFirmy) {
+        this.nazwaFirmy = nazwaFirmy;
+    }
+
 }
