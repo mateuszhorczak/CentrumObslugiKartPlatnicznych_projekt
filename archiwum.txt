@@ -9,3 +9,13 @@ Nazwa Firmy: fhakj
 Nazwa banku: Bank1
 Powodzenie transakcji: true
 ******************** ********************
+Imie: Kaja
+Nazwisko: Wysocka
+Data: Sat Jun 04 15:29:54 IST 2022
+Kwota: 50.0
+Numer Karty: 326517
+Rodzaj Karty: Karta Kredytowa
+Typ operacji: Wyplata
+Nazwa banku: Bank2
+Powodzenie transakcji: false
+******************** ********************

@@ -8,14 +8,13 @@ import java.util.Scanner;
 public class Bank {
     private ArrayList<Osoba> osoby;
     private String nazwaBanku;
-    private Karta tempKarta;
-// elo
+
     public Bank(String nazwaBanku) {
         this.nazwaBanku = nazwaBanku;
         this.osoby = new ArrayList<>();
     }
 
-    public void  wczytajDane(String nazwaPliku) throws IOException {
+    public void wczytajDane(String nazwaPliku) throws IOException {
         File plik = new File(nazwaPliku);
         Scanner scannerZPliku = new Scanner(plik);
         while (scannerZPliku.hasNext()) {
@@ -24,67 +23,57 @@ public class Bank {
             int rodzajKarty = Integer.parseInt(wyrazy[4]);
             int numerKarty = Integer.parseInt(wyrazy[2]);
             double stanKarty = Double.parseDouble(wyrazy[3]);
-            boolean x =false;
-            for (int i = 0; i < osoby.size(); i++) {
-                String imie = osoby.get(i).getImie();
-                String nazwisko = osoby.get(i).getNazwisko();
-                if (imie.equals(wyrazy[0])  && nazwisko.equals(wyrazy[1])) {
+            boolean x = false;
+            for (Osoba osoba : osoby) {
+                String imie = osoba.getImie();
+                String nazwisko = osoba.getNazwisko();
+                if (imie.equals(wyrazy[0]) && nazwisko.equals(wyrazy[1])) {
                     x = true;
-                    switch (rodzajKarty) {
-                        case 1:
-                            KartaBankomatowa kartaBankomatowa = new KartaBankomatowa(numerKarty, stanKarty);
-                            osoby.get(i).dodajKarte(kartaBankomatowa);
-                            break;
-                        case 2:
-                            KartaDebetowa kartaDebetowa = new KartaDebetowa(numerKarty, stanKarty);
-                            osoby.get(i).dodajKarte(kartaDebetowa);
-                            break;
-                        case 3:
-                            KartaKredytowa kartaKredytowa = new KartaKredytowa(numerKarty, stanKarty);
-                            osoby.get(i).dodajKarte(kartaKredytowa);
-                            break;
-                    }
+                    dodajDobryTypKarty(rodzajKarty, numerKarty, stanKarty, osoba);
                 }
             }
-            if (x == false) {
+            if (!x) {
                 Osoba nowaOsoba = new Osoba(wyrazy[0], wyrazy[1]);
-                switch (rodzajKarty) {
-                    case 1:
-                        KartaBankomatowa kartaBankomatowa = new KartaBankomatowa(numerKarty, stanKarty);
-                        nowaOsoba.dodajKarte(kartaBankomatowa);
-                        break;
-                    case 2:
-                        KartaDebetowa kartaDebetowa = new KartaDebetowa(numerKarty, stanKarty);
-                        nowaOsoba.dodajKarte(kartaDebetowa);
-                        break;
-                    case 3:
-                        KartaKredytowa kartaKredytowa = new KartaKredytowa(numerKarty, stanKarty);
-                        nowaOsoba.dodajKarte(kartaKredytowa);
-                        break;
-                }
+                dodajDobryTypKarty(rodzajKarty, numerKarty, stanKarty, nowaOsoba);
                 osoby.add(nowaOsoba);
             }
         }
     }
 
+    public void dodajDobryTypKarty(int rodzajKarty, int numerKarty, double stanKarty, Osoba osoba) {
+        switch (rodzajKarty) {
+            case 1:
+                KartaBankomatowa kartaBankomatowa = new KartaBankomatowa(numerKarty, stanKarty);
+                osoba.dodajKarte(kartaBankomatowa);
+                break;
+            case 2:
+                KartaDebetowa kartaDebetowa = new KartaDebetowa(numerKarty, stanKarty);
+                osoba.dodajKarte(kartaDebetowa);
+                break;
+            case 3:
+                KartaKredytowa kartaKredytowa = new KartaKredytowa(numerKarty, stanKarty);
+                osoba.dodajKarte(kartaKredytowa);
+                break;
+        }
+    }
+
     public void zapiszDane(String nazwaPliku) throws IOException {
-        int i;
         File plik = new File(nazwaPliku);
         plik.createNewFile();
         PrintWriter zapiszDoPliku = new PrintWriter(plik);
-        for(Osoba osoba: osoby){
-            for(Karta karta: osoba.getKarty()) {
+        for (Osoba osoba : osoby) {
+            for (Karta karta: osoba.getKarty()) {
                 zapiszDoPliku.printf(osoba.getImie() + " ");
                 zapiszDoPliku.printf(osoba.getNazwisko() + " ");
                 zapiszDoPliku.printf(karta.getNumerKarty() + " ");
                 zapiszDoPliku.printf(karta.getStanKarty() + " ");
-                if(karta instanceof KartaBankomatowa){
+                if (karta instanceof KartaBankomatowa) {
                     zapiszDoPliku.printf("1");
                 }
-                if(karta instanceof KartaDebetowa){
+                if (karta instanceof KartaDebetowa) {
                     zapiszDoPliku.printf("2");
                 }
-                if(karta instanceof KartaKredytowa){
+                if (karta instanceof KartaKredytowa) {
                     zapiszDoPliku.printf("3");
                 }
                 zapiszDoPliku.printf("\n");
@@ -101,7 +90,6 @@ public class Bank {
         for (var item : osoby) {
             for (var item2 : item.getKarty()) {
                 if (item2.getNumerKarty() == numerPodany) {
-                    tempKarta = item2;
                     return true;
                 }
             }
@@ -119,24 +107,42 @@ public class Bank {
     }
 
 
-    public boolean wplac(int numerPodany, double kwota) {
+    public boolean wplac(int numerPodany, double kwota) throws CardNotFoundException {
+        Karta karta = wezKarte(numerPodany);
+
         if (czyNalezyOsobaDoBanku(numerPodany)) {
-            tempKarta.setStanKarty(tempKarta.getStanKarty() + kwota);
+            karta.setStanKarty(karta.getStanKarty() + kwota);
             return true;
         }
-        else {
-            return false;
-        }
+
+        return false;
     }
 
-    public boolean wyplac(int numerPodany, double kwota) {
+    public boolean wyplac(int numerPodany, double kwota) throws CardNotFoundException, InvalidCardDataException {
+        Karta karta = wezKarte(numerPodany);
+
+        if (karta.getStanKarty() - kwota < 0) {
+            throw new InvalidCardDataException();
+        }
+
         if (czyNalezyOsobaDoBanku(numerPodany)) {
-            tempKarta.setStanKarty(tempKarta.getStanKarty() - kwota);
+            karta.setStanKarty(karta.getStanKarty() - kwota);
             return true;
         }
-        else {
-            return false;
+
+        return false;
+    }
+
+    private Karta wezKarte(int numerPodany) throws CardNotFoundException {
+        for (var osoba : osoby) {
+            for (var karta : osoba.getKarty()) {
+                if (karta.getNumerKarty() == numerPodany) {
+                    return karta;
+                }
+            }
         }
+
+        throw new CardNotFoundException();
     }
 
     public ArrayList<Osoba> getOsoby() {

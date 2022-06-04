@@ -4,7 +4,7 @@ Krystyna Mazur 382972 500.0 1
 Roksana Pietrzak 569023 1500.0 1
 Roksana Pietrzak 842822 7964.5 3
 Roksana Pietrzak 427262 2000.0 2
-Kewin Mroz 490782 3000.0 3
+Kewin Mroz 490782 1500.0 3
 Natan Krajewski 832778 1900.0 2
 Teresa Maciejewska 264278 3000.0 1
-Kaja Wysocka 326517 1000.0 3
+Kaja Wysocka 326517 0.0 3
