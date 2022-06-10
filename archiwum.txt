@@ -1,20 +1,32 @@
-Imie: Stefan
-Nazwisko: Pierdzibak
-Data: Sat Jun 04 20:22:20 IST 2022
-Kwota: 12345.0
-null
-null
-Typ operacji: Wydano nowa karte!
-Nazwa banku: Bank1
-Powodzenie transakcji: true
-******************** ********************
 Imie: Jaroslaw
 Nazwisko: Kaczynski
-Data: Sat Jun 04 20:29:54 IST 2022
-Kwota: 10000.0
-null
-null
-Typ operacji: Wydano nowa karte!
+Data: Fri Jun 10 21:12:10 IST 2022
+Kwota: 110.0
+Numer Karty: 997997
+Rodzaj Karty: Karta Debetowa
+Rodzaj Firmy: Sklep
+Nazwa Firmy: sklepik
+Nazwa banku: Bank3
+Powodzenie transakcji: true
+******************** ********************
+Imie: Aleksander
+Nazwisko: Kaczynski
+Data: Fri Jun 10 21:12:40 IST 2022
+Kwota: 111.0
+Numer Karty: 404040
+Rodzaj Karty: Karta Debetowa
+Rodzaj Firmy: Firma Transportowa
+Nazwa Firmy: zakladzik
+Nazwa banku: Bank3
+Powodzenie transakcji: true
+******************** ********************
+Imie: Aleksander
+Nazwisko: Kaczynski
+Data: Fri Jun 10 21:13:13 IST 2022
+Kwota: 111.0
+Numer Karty: 404040
+Rodzaj Karty: Karta Debetowa
+Typ operacji: Wplata
 Nazwa banku: Bank3
 Powodzenie transakcji: true
 ******************** ********************

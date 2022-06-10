@@ -60,10 +60,7 @@ public class Bank {
 
     public void zapiszDane(String nazwaPliku) throws IOException {
         File plik = new File(nazwaPliku);
-        if (!plik.createNewFile()) {
-            System.out.println("Problem z plikiem");
-            return;
-        }
+        plik.createNewFile();
         PrintWriter zapiszDoPliku = new PrintWriter(plik);
         for (Osoba osoba : osoby) {
             for (Karta karta : osoba.getKarty()) {

@@ -28,10 +28,7 @@ public class Main {
             String linia = scannerZPliku.nextLine();
             linie.add(linia);
         }
-        if (!plik.createNewFile()) {
-            System.out.println("Problem z plikiem");
-            return;
-        }
+        plik.createNewFile();
         PrintWriter zapiszDoPliku = new PrintWriter(plik);
         for (i = 0; i < linie.size(); i++) {
             zapiszDoPliku.printf(linie.get(i));
@@ -69,9 +66,8 @@ public class Main {
                             dodajKlientCentrum(centrum, zapiszDoPliku, new ZakladUslugowy());
                             break;
                     }
-
-
-                case 2:
+                    break;
+                case 2 : {
                     System.out.println("Do ktorego banku chcesz sie udac, podaj index (zaczyna sie od 0)");
                     centrum.wypiszBanki();
                     int numerBanku = scanner.nextInt();
@@ -219,7 +215,7 @@ public class Main {
                             System.out.println("O to twoja karta!");
                     }
                     break;
-
+                }
                 case 3:
                     //Tutaj tryb serwisanta czyli 1 - mozliwosc wyswietlenia calego calego calgo archiwum z pliku od poczatku
                     //  w tym switchu trzeba bedzie zrobic zeby mozna bylo pzrzsezukiwac te archiwum po danym parametrze
@@ -300,7 +296,6 @@ public class Main {
     public static void dodajKlientCentrum(Centrum centrum, PrintWriter printWriter, KlientCentrum klientCentrum) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Podaj nazwe zakladu uslugowego: ");
-        scanner.nextLine();
         String nazwaKlientCentrum = scanner.nextLine();
         klientCentrum.setNazwaFirmy(nazwaKlientCentrum);
         System.out.println("Podaj numerKarty: ");

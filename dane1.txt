@@ -9,4 +9,5 @@ Sylwia Wojciechowska 777777 1000.0 2
 Katarzyna Maciejewska 888888 4000.0 1
 Maria Wojcik 999999 2050.0 1
 Stefan Pierdzibak 987654 7137.0 2
-Stefan Pierdzibak 876521 12345.0 3
+Stefan Pierdzibak 876521 12300.0 3
+Stefan Pierdzibak 909091 10000.0 1
