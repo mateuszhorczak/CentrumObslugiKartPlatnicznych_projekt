@@ -114,12 +114,12 @@ public class Centrum {
         }
         powodzenieTransakcji = "Powodzenie transakcji: " + wpis.getPowodzenieTranskacji();
 
-        rodzajFirmy = rodzajFirmy == null ? "" : rodzajFirmy + "\n";
+       /* rodzajFirmy = rodzajFirmy == null ? "" : rodzajFirmy + "\n";
         nazwaFirmy = nazwaFirmy == null ? "" : nazwaFirmy + "\n";
-        typOperacji = wpis.typOperacji == null ? "" : "Typ operacji: " + wpis.typOperacji + "\n";
+        typOperacji = wpis.typOperacji == null ? "" : "Typ operacji: " + wpis.typOperacji + "\n";*/
 
         return (imie + "\n" + nazwisko + "\n" + data + "\n" + kwota + "\n" + numerKarty + "\n" + rodzajKarty + "\n" +
-                rodzajFirmy + nazwaFirmy + typOperacji + nazwaBanku + "\n" + powodzenieTransakcji + "\n"
+                rodzajFirmy + nazwaFirmy /*+ typOperacji*/ + nazwaBanku + "\n" + powodzenieTransakcji + "\n"
                 + "******************** ********************\n");
 
     }

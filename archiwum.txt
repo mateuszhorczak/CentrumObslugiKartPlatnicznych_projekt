@@ -1,7 +1,7 @@
 Imie: Jaroslaw
 Nazwisko: Kaczynski
-Data: Fri Jun 10 21:12:10 IST 2022
-Kwota: 110.0
+Data: Sat Jun 11 19:16:16 IST 2022
+Kwota: 2.5
 Numer Karty: 997997
 Rodzaj Karty: Karta Debetowa
 Rodzaj Firmy: Sklep
@@ -9,24 +9,34 @@ Nazwa Firmy: sklepik
 Nazwa banku: Bank3
 Powodzenie transakcji: true
 ******************** ********************
-Imie: Aleksander
+null
+null
+Data: Sat Jun 11 19:17:36 IST 2022
+Kwota: 40.2
+null
+null
+Typ operacji: Karta nie istnieje
+null
+Powodzenie transakcji: false
+******************** ********************
+Imie: Jaroslaw
 Nazwisko: Kaczynski
-Data: Fri Jun 10 21:12:40 IST 2022
-Kwota: 111.0
-Numer Karty: 404040
+Data: Sat Jun 11 19:18:08 IST 2022
+Kwota: 20.5
+Numer Karty: 997997
 Rodzaj Karty: Karta Debetowa
-Rodzaj Firmy: Firma Transportowa
-Nazwa Firmy: zakladzik
+Typ operacji: Wyplata
 Nazwa banku: Bank3
 Powodzenie transakcji: true
 ******************** ********************
-Imie: Aleksander
-Nazwisko: Kaczynski
-Data: Fri Jun 10 21:13:13 IST 2022
-Kwota: 111.0
-Numer Karty: 404040
-Rodzaj Karty: Karta Debetowa
-Typ operacji: Wplata
-Nazwa banku: Bank3
-Powodzenie transakcji: true
+null
+null
+Data: Sat Jun 11 19:22:14 IST 2022
+Kwota: 1.0E25
+null
+null
+Rodzaj Firmy: Firma Transportowa
+Nazwa Firmy: sklepik
+null
+Powodzenie transakcji: false
 ******************** ********************

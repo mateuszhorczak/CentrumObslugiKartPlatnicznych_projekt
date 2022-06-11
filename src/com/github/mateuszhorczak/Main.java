@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
@@ -37,6 +38,7 @@ public class Main {
 
         while (true) {
             Scanner scanner = new Scanner(System.in);
+            scanner.useLocale(Locale.US);
 
             System.out.println("Witaj, co chcesz zrobić?");
             System.out.println("1 - Zrealizowac platnosc");
@@ -82,7 +84,7 @@ public class Main {
 
                     if (z == 4) {
                         System.out.println("Do widzenia!");
-                        break; //TODO sprawdzic czy wychodzi
+                        break;
                     }
 
                     int numerKarty = 0;
@@ -96,7 +98,7 @@ public class Main {
 
                         boolean czyIstnieje = centrum.czyIstniejeNumerKarty(numerKarty);
                         if (!czyIstnieje) {
-                            Date aktualnaData1 = new Date();
+                            /*Date aktualnaData1 = new Date();
                             Wpis wpis = new Wpis(centrum.znajdzOsobePoNumerze(numerKarty),
                                     aktualnaData1,
                                     kwota,
@@ -106,7 +108,8 @@ public class Main {
                                     "Karta nie istnieje"
                             );
                             centrum.dodajWpis(wpis);
-                            zapiszDoPliku.printf(centrum.pobierzWpis(wpis));
+                            zapiszDoPliku.printf(centrum.pobierzWpis(wpis));*/
+
                             System.out.println("Podany numer karty nie istnieje");
                             break;
                         }
@@ -117,7 +120,7 @@ public class Main {
                             try {
                                 centrum.znajdzBankWKtorymJestTenNumerKarty(numerKarty).wplac(numerKarty, kwota);
 
-                                Wpis wpis = new Wpis(
+                                /*Wpis wpis = new Wpis(
                                         centrum.znajdzOsobePoNumerze(numerKarty),
                                         new Date(),
                                         kwota,
@@ -127,7 +130,8 @@ public class Main {
                                         "Wplata"
                                 );
                                 centrum.dodajWpis(wpis);
-                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis));
+                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis));*/
+
                                 System.out.println("Poprawnie uiszczone wplate na konto");
 
                             } catch (CardNotFoundException exception) {
@@ -139,7 +143,7 @@ public class Main {
                             try {
                                 centrum.znajdzBankWKtorymJestTenNumerKarty(numerKarty).wyplac(numerKarty, kwota);
 
-                                Wpis wpis = new Wpis(
+                                /*Wpis wpis = new Wpis(
                                         centrum.znajdzOsobePoNumerze(numerKarty),
                                         new Date(),
                                         kwota,
@@ -149,13 +153,14 @@ public class Main {
                                         "Wyplata"
                                 );
                                 centrum.dodajWpis(wpis);
-                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis));
+                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis));*/
+
                                 System.out.println("Wyplata pieniedzy powiodla sie!");
 
                             } catch (CardNotFoundException exception) {
                                 System.out.println("Karta nie istnieje");
                             } catch (InvalidCardDataException exception) {
-                                Wpis wpis = new Wpis(
+                                /*Wpis wpis = new Wpis(
                                         centrum.znajdzOsobePoNumerze(numerKarty),
                                         new Date(),
                                         kwota,
@@ -165,11 +170,12 @@ public class Main {
                                         "Wyplata"
                                 );
                                 centrum.dodajWpis(wpis);
-                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis));
+                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis));*/
+
                                 System.out.println("Na karcie nie ma wystarczajacych srodkow!");
                             }
-
                             break;
+
                         case 3:
                             System.out.println("Jaka karte chcesz dodac?");
                             System.out.println("Karta Bankomatowa: 1");
@@ -201,7 +207,7 @@ public class Main {
                             bank.dodajDobryTypKarty(rodzajKarty, nrKarty, kwotaWplacenia, osoba);
                             bank.dodajOsobe(osoba);
 
-                            Wpis wpis = new Wpis(
+                            /*Wpis wpis = new Wpis(
                                     centrum.znajdzOsobePoNumerze(nrKarty),
                                     new Date(),
                                     kwotaWplacenia,
@@ -211,7 +217,8 @@ public class Main {
                                     "Wydano nowa karte!"
                             );
                             centrum.dodajWpis(wpis);
-                            zapiszDoPliku.printf(centrum.pobierzWpis(wpis));
+                            zapiszDoPliku.printf(centrum.pobierzWpis(wpis));*/
+
                             System.out.println("O to twoja karta!");
                     }
                     break;
@@ -295,7 +302,8 @@ public class Main {
 
     public static void dodajKlientCentrum(Centrum centrum, PrintWriter printWriter, KlientCentrum klientCentrum) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Podaj nazwe zakladu uslugowego: ");
+        scanner.useLocale(Locale.US);
+        System.out.println("Podaj nazwe sklepu / firmy / zakladu: ");
         String nazwaKlientCentrum = scanner.nextLine();
         klientCentrum.setNazwaFirmy(nazwaKlientCentrum);
         System.out.println("Podaj numerKarty: ");

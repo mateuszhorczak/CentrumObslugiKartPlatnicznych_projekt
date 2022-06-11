@@ -10,5 +10,5 @@ Oktawian Baranowski 326561 2500.0 2
 Patryk Tomaszewski 327864 1500.0 1
 Aleksander Kaczynski 420213 1939.0 1
 Aleksander Kaczynski 404040 20000.0 2
-Jaroslaw Kaczynski 997997 96000.0 2
+Jaroslaw Kaczynski 997997 95927.0 2
 Jaroslaw Kaczynski 567935 10000.0 3
