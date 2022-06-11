@@ -1,9 +1,7 @@
 package com.github.mateuszhorczak;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
-//elo
 public class Centrum {
     private final ArrayList<Wpis> archiwum;
     private final ArrayList<KlientCentrum> klienciCentrum;
@@ -22,7 +20,7 @@ public class Centrum {
     public void wypiszBanki() {
         int i = 0;
         for (var item : banki) {
-            System.out.println(item.pobierzNazwe() + " index: " + i++);
+            System.out.println(i++ + " - " + item.pobierzNazwe());
         }
     }
 
@@ -73,7 +71,57 @@ public class Centrum {
 
     }
 
-    public String pobierzWpis(Wpis wpis) {
+    public String pobierzWpisPlik(Wpis wpis) {
+        String imie = null, nazwisko = null, data, kwota, numerKarty = null, rodzajKarty = null,
+                rodzajFirmy = null, nazwaFirmy = null, nazwaBanku = null, powodzenieTransakcji;
+        String typOperacji;
+
+        if (wpis.getOsoba() != null) {
+            imie = "Imie: " + wpis.getOsoba().getImie();
+            nazwisko = "Nazwisko: " + wpis.getOsoba().getNazwisko();
+        }
+        data = "Data: " + wpis.getData();
+        kwota = "Kwota: " + wpis.getKwota();
+        if (wpis.getKarta() != null) {
+            numerKarty = "Numer Karty: " + wpis.getKarta().getNumerKarty();
+            if (wpis.getKarta() instanceof KartaKredytowa) {
+                rodzajKarty = "Rodzaj Karty: KartaKredytowa";
+            }
+            if (wpis.getKarta() instanceof KartaDebetowa) {
+                rodzajKarty = "Rodzaj Karty: KartaDebetowa";
+            }
+            if (wpis.getKarta() instanceof KartaBankomatowa) {
+                rodzajKarty = "Rodzaj Karty: KartaBankomatowa";
+            }
+        }
+        if (wpis.getKlientCentrum() != null) {
+
+            if (wpis.getKlientCentrum() instanceof Sklep) {
+                rodzajFirmy = "Rodzaj Firmy: Sklep";
+            }
+            if (wpis.getKlientCentrum() instanceof FirmaTransportowa) {
+                rodzajFirmy = "Rodzaj Firmy: FirmaTransportowa";
+            }
+            if (wpis.getKlientCentrum() instanceof ZakladUslugowy) {
+                rodzajFirmy = "Rodzaj Firmy: ZakladUslugowy";
+            }
+            nazwaFirmy = "Nazwa Firmy: " + wpis.getKlientCentrum().getNazwaFirmy();
+        }
+        if (wpis.getBank() != null) {
+            nazwaBanku = "Nazwa banku: " + wpis.getBank().pobierzNazwe();
+        }
+        powodzenieTransakcji = "Powodzenie transakcji: " + wpis.getPowodzenieTranskacji();
+
+       /* rodzajFirmy = rodzajFirmy == null ? "" : rodzajFirmy + "\n";
+        nazwaFirmy = nazwaFirmy == null ? "" : nazwaFirmy + "\n";
+        typOperacji = wpis.typOperacji == null ? "" : "Typ operacji: " + wpis.typOperacji + "\n";*/
+
+        return (imie+ " " + nazwisko+ " " + data+ " " + kwota+ " " + numerKarty+ " " + rodzajKarty+ " " +
+                rodzajFirmy+ " " + nazwaFirmy+ " " /*+ typOperacji*/ + nazwaBanku+ " " + powodzenieTransakcji+"\n");
+
+    }
+
+    public String pobierzWpisWyswietlanie(Wpis wpis) {
         String imie = null, nazwisko = null, data, kwota, numerKarty = null, rodzajKarty = null,
                 rodzajFirmy = null, nazwaFirmy = null, nazwaBanku = null, powodzenieTransakcji;
         String typOperacji;
@@ -119,7 +167,7 @@ public class Centrum {
         typOperacji = wpis.typOperacji == null ? "" : "Typ operacji: " + wpis.typOperacji + "\n";*/
 
         return (imie + "\n" + nazwisko + "\n" + data + "\n" + kwota + "\n" + numerKarty + "\n" + rodzajKarty + "\n" +
-                rodzajFirmy + nazwaFirmy /*+ typOperacji*/ + nazwaBanku + "\n" + powodzenieTransakcji + "\n"
+                rodzajFirmy +"\n"+ nazwaFirmy + "\n"/*+ typOperacji*/ + nazwaBanku + "\n" + powodzenieTransakcji + "\n"
                 + "******************** ********************\n");
 
     }

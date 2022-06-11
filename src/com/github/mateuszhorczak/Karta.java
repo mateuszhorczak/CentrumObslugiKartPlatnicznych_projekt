@@ -7,6 +7,9 @@ public abstract class Karta {
         this.numerKarty = numerKarty;
         this.stanKarty = stanKarty;
     }
+    public Karta(int numerKarty) {
+        this.numerKarty = numerKarty;
+    }
 
     public int getNumerKarty() {
         return numerKarty;

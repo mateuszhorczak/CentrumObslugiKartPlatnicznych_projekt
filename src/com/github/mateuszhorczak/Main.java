@@ -39,7 +39,6 @@ public class Main {
         while (true) {
             Scanner scanner = new Scanner(System.in);
             scanner.useLocale(Locale.US);
-
             System.out.println("Witaj, co chcesz zrobić?");
             System.out.println("1 - Zrealizowac platnosc");
             System.out.println("2 - Skorzystac z uslug banku");
@@ -55,7 +54,7 @@ public class Main {
                     System.out.println("1 - Sklep");
                     System.out.println("2 - Firma Transportowa");
                     System.out.println("3 - Zaklad Uslugowy");
-                    System.out.println("4 - Rozmyslilem się - nie chce nic");
+                    System.out.println("4 - Rozmyslilem się - chce sie cofnac do glownego menu");
                     int y = scanner.nextInt();
                     switch (y) {
                         case 1:
@@ -70,16 +69,21 @@ public class Main {
                     }
                     break;
                 case 2 : {
-                    System.out.println("Do ktorego banku chcesz sie udac, podaj index (zaczyna sie od 0)");
-                    centrum.wypiszBanki();
-                    int numerBanku = scanner.nextInt();
-
+                    int numerBanku;
+                    while(true) {
+                        System.out.println("Do ktorego banku chcesz sie udac, podaj index (zaczyna sie od 0): ");
+                        centrum.wypiszBanki();
+                        numerBanku = scanner.nextInt();
+                        if (numerBanku>= 0 && numerBanku <=2){
+                            break;
+                        }
+                    }
                     System.out.println("Witaj w banku!");
                     System.out.println("Co chcesz zrobic?");
-                    System.out.println("Wplacic pieniadze do banku: 1");
-                    System.out.println("Wyplacic pieniadze z banku: 2");
-                    System.out.println("Dodac nowa karte: 3");
-                    System.out.println("Wychodze z banku: 4");
+                    System.out.println("1 - Wplacic pieniadze do banku");
+                    System.out.println("2 - Wyplacic pieniadze z banku");
+                    System.out.println("3 - Dodac nowa karte");
+                    System.out.println("4 - Chce wyjsc z banku i wrocic do glownego menu");
                     int z = scanner.nextInt();
 
                     if (z == 4) {
@@ -178,12 +182,12 @@ public class Main {
 
                         case 3:
                             System.out.println("Jaka karte chcesz dodac?");
-                            System.out.println("Karta Bankomatowa: 1");
-                            System.out.println("Karta Debetowa: 2");
-                            System.out.println("Karta Kredytowa: 3");
+                            System.out.println("1 - Karta Bankomatowa");
+                            System.out.println("2 - Karta Debetowa");
+                            System.out.println("3 - Karta Kredytowa");
                             int rodzajKarty = scanner.nextInt();
 
-                            System.out.println("Podaj numer karty");
+                            System.out.println("Podaj numer karty: ");
                             int nrKarty = scanner.nextInt();
 
                             if (centrum.czyNumerKartyJestZajety(nrKarty)) {
@@ -219,7 +223,7 @@ public class Main {
                             centrum.dodajWpis(wpis);
                             zapiszDoPliku.printf(centrum.pobierzWpis(wpis));*/
 
-                            System.out.println("O to twoja karta!");
+                            System.out.println("Oto twoja karta!");
                     }
                     break;
                 }
@@ -236,10 +240,10 @@ public class Main {
             }
 
         }
+        centrum.wypiszWpisy();
         bank1.zapiszDane("dane1.txt");
         bank2.zapiszDane("dane2.txt");
         bank3.zapiszDane("dane3.txt");
-
         zapiszDoPliku.close();
     }
 
@@ -251,8 +255,8 @@ public class Main {
         Date aktualnaData2 = new Date();
         Wpis wpis2 = new Wpis(aktualnaData2, kwota2, firmaTransportowa, false);
         centrum.dodajWpis(wpis2);
-        zapiszDoPliku.printf(centrum.pobierzWpis(wpis2));
-        System.out.println("Podany numer karty nie istnieje");
+        zapiszDoPliku.printf(centrum.pobierzWpisPlik(wpis2));
+        System.out.println("Podany numer karty nie istnieje!");
         return true;
     }
 
@@ -281,7 +285,7 @@ public class Main {
             );
 
             centrum.dodajWpis(wpis3);
-            zapiszDoPliku.printf(centrum.pobierzWpis(wpis3));
+            zapiszDoPliku.printf(centrum.pobierzWpisPlik(wpis3));
             return;
         }
         Date aktualnaData3 = new Date();
@@ -295,8 +299,8 @@ public class Main {
         );
 
         centrum.dodajWpis(wpis3);
-        zapiszDoPliku.printf(centrum.pobierzWpis(wpis3));
-        System.out.println("Przepraszamy - nie da sie zaplacic karta bankomatowa");
+        zapiszDoPliku.printf(centrum.pobierzWpisPlik(wpis3));
+        System.out.println("Przepraszamy - nie da sie zaplacic karta bankomatowa!");
     }
 
 

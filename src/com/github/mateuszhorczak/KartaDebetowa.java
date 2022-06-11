@@ -7,4 +7,8 @@ public class KartaDebetowa extends Karta {
         super(numerKarty, stanKarty);
         this.rozmiarDebetu = 2000;
     }
+
+    public KartaDebetowa(int numerKarty) {
+        super(numerKarty);
+    }
 }
