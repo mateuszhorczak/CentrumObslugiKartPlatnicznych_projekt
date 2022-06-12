@@ -115,9 +115,13 @@ public class Centrum {
        /* rodzajFirmy = rodzajFirmy == null ? "" : rodzajFirmy + "\n";
         nazwaFirmy = nazwaFirmy == null ? "" : nazwaFirmy + "\n";
         typOperacji = wpis.typOperacji == null ? "" : "Typ operacji: " + wpis.typOperacji + "\n";*/
-
-        return (imie+ " " + nazwisko+ " " + data+ " " + kwota+ " " + numerKarty+ " " + rodzajKarty+ " " +
-                rodzajFirmy+ " " + nazwaFirmy+ " " /*+ typOperacji*/ + nazwaBanku+ " " + powodzenieTransakcji+"\n");
+        imie = imie == null?"Imie: null":imie;
+        nazwisko = nazwisko == null?"Nazwisko: null":nazwisko;
+        numerKarty = numerKarty == null?"NumerKarty: null":numerKarty;
+        rodzajKarty = rodzajKarty == null?"RodzajKarty: null":rodzajKarty;
+        nazwaBanku = nazwaBanku == null?"NazwaBanku: null":nazwaBanku;
+        return (imie+ ";" + nazwisko+ ";" + data+ ";" + kwota+ ";" + numerKarty+ ";" + rodzajKarty+ ";" +
+                rodzajFirmy+ ";" + nazwaFirmy+ ";" /*+ typOperacji*/ + nazwaBanku+ ";" + powodzenieTransakcji+"\n");
 
     }
 

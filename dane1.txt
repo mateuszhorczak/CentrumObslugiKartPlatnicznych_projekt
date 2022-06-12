@@ -1,5 +1,5 @@
 Anastazy Andrzejewski 456789 4000.0 1
-Norbert Andrzejewski 111111 2258.0 2
+Norbert Andrzejewski 111111 1944.0 2
 Patryk Zakrzewski 222222 1900.0 2
 Patryk Zakrzewski 444444 800.0 3
 Iga Baran 333333 3090.0 3

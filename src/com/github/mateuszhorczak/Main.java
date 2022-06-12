@@ -3,13 +3,23 @@ package com.github.mateuszhorczak;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
 
+import static java.util.Locale.getDefault;
+
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static String wezWartosc(String[] wartosci, int index) {
+        System.out.println(wartosci[index].split(": ")[1]);
+        return wartosci[index].split(": ")[1];
+    }
+
+    public static void main(String[] args) throws IOException, ParseException {
         Bank bank1 = new Bank("Bank1");
         bank1.wczytajDane("dane1.txt");
         Bank bank2 = new Bank("Bank2");
@@ -28,6 +38,41 @@ public class Main {
         while (scannerZPliku.hasNext()) {
             String linia = scannerZPliku.nextLine();
             linie.add(linia);
+            String wyrazy[] = linia.split(";");
+            Karta karta;
+            if (wezWartosc(wyrazy, 5).equals("KartaBankomatowa")) {
+                karta = new KartaBankomatowa(Integer.parseInt(wezWartosc(wyrazy, 4)));
+            } else if (wezWartosc(wyrazy, 5).equals("KartaKredytowa")) {
+                karta = new KartaKredytowa(Integer.parseInt(wezWartosc(wyrazy, 4)));
+            } else if (wezWartosc(wyrazy, 5).equals("KartaDebetowa")) {
+                karta = new KartaDebetowa(Integer.parseInt(wezWartosc(wyrazy, 4)));
+            } else {
+                continue;
+            }
+
+            KlientCentrum klient;
+            if (wezWartosc(wyrazy, 6).equals("FirmaTransportowa")) {
+                klient = new FirmaTransportowa();
+                klient.setNazwaFirmy(wezWartosc(wyrazy, 7));
+            } else if (wezWartosc(wyrazy, 6).equals("ZakladUslugowy")) {
+                klient = new ZakladUslugowy();
+                klient.setNazwaFirmy(wezWartosc(wyrazy, 7));
+            } else if (wezWartosc(wyrazy, 6).equals("Sklep")) {
+                klient = new Sklep();
+                klient.setNazwaFirmy(wezWartosc(wyrazy, 7));
+            } else {
+                continue;
+            }
+            Wpis wpisPlik = new Wpis(
+                    new Osoba(wezWartosc(wyrazy, 0), wezWartosc(wyrazy, 1)),
+                    new Date(),
+                    Double.parseDouble(wezWartosc(wyrazy, 3)),
+                    karta,
+                    klient,
+                    new Bank(wezWartosc(wyrazy, 8)),
+                    wezWartosc(wyrazy, 9) == "true"
+            );
+            centrum.dodajWpis(wpisPlik);
         }
         plik.createNewFile();
         PrintWriter zapiszDoPliku = new PrintWriter(plik);
@@ -35,6 +80,7 @@ public class Main {
             zapiszDoPliku.printf(linie.get(i));
             zapiszDoPliku.printf("\n");
         }
+
 
         while (true) {
             Scanner scanner = new Scanner(System.in);
@@ -68,13 +114,13 @@ public class Main {
                             break;
                     }
                     break;
-                case 2 : {
+                case 2: {
                     int numerBanku;
-                    while(true) {
+                    while (true) {
                         System.out.println("Do ktorego banku chcesz sie udac, podaj index (zaczyna sie od 0): ");
                         centrum.wypiszBanki();
                         numerBanku = scanner.nextInt();
-                        if (numerBanku>= 0 && numerBanku <=2){
+                        if (numerBanku >= 0 && numerBanku <= 2) {
                             break;
                         }
                     }

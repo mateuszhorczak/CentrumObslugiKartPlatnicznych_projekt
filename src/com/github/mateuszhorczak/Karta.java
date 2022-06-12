@@ -2,7 +2,7 @@ package com.github.mateuszhorczak;
 public abstract class Karta {
     protected int numerKarty;
     protected double stanKarty;
-//elo
+
     public Karta(int numerKarty, double stanKarty) {
         this.numerKarty = numerKarty;
         this.stanKarty = stanKarty;
