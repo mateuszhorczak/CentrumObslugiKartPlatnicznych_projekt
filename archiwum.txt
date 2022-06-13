@@ -3,3 +3,4 @@ Imie: Iga;Nazwisko: Baran;Data: Mon Jun 13 14:39:24 CEST 2022;Kwota: 20.0;Numer 
 Imie: Iga;Nazwisko: Baran;Data: Mon Jun 13 14:41:27 CEST 2022;Kwota: 10.0;Numer Karty: 333333;Rodzaj Karty: KartaKredytowa;Rodzaj Firmy: ZakladUslugowy;Nazwa Firmy: 333333;Nazwa banku: Bank1;Powodzenie transakcji: true
 Imie: Norbert;Nazwisko: Andrzejewski;Data: Mon Jun 13 15:27:44 CEST 2022;Kwota: 100.0;Numer Karty: 111111;Rodzaj Karty: KartaDebetowa;Rodzaj Firmy: ZakladUslugowy;Nazwa Firmy: firma;Nazwa banku: Bank1;Powodzenie transakcji: true
 Imie: Irena;Nazwisko: Jakubowska;Data: Mon Jun 13 15:44:03 CEST 2022;Kwota: 20.0;Numer Karty: 723866;Rodzaj Karty: KartaDebetowa;Rodzaj Firmy: FirmaTransportowa;Nazwa Firmy: firma;Nazwa banku: Bank3;Powodzenie transakcji: true
+Imie: Norbert;Nazwisko: Andrzejewski;Data: Mon Jun 13 15:51:50 CEST 2022;Kwota: 10.34;Numer Karty: 111111;Rodzaj Karty: KartaDebetowa;Rodzaj Firmy: Sklep;Nazwa Firmy: gjkvh;Nazwa banku: Bank1;Powodzenie transakcji: true

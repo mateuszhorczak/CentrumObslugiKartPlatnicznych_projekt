@@ -8,10 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
-
 public class Main {
-
-
     public static void main(String[] args) throws IOException, ParseException {
         Bank bank1 = new Bank("Bank1");
         bank1.wczytajDane("dane1.txt");
