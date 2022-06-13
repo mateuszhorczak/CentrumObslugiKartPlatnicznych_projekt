@@ -9,5 +9,5 @@ Kewin Mroz 490782 1500.0 3
 Natan Krajewski 832778 1167.0 2
 Natan Krajewski 838329 4500.0 3
 Teresa Maciejewska 264278 3000.0 1
-Kaja Wysocka 326517 0.0 3
+Kaja Wysocka 326517 3500.0 3
 Jan Kowalski 456735 5500.0 3

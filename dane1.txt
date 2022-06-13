@@ -1,14 +1,10 @@
 Anastazy Andrzejewski 456789 4000.0 1
-Norbert Andrzejewski 111111 1944.0 2
+Norbert Andrzejewski 111111 1804.0 2
 Patryk Zakrzewski 222222 1900.0 2
 Patryk Zakrzewski 444444 800.0 3
-Iga Baran 333333 3090.0 3
+Iga Baran 333333 3080.0 3
 Iga Baran 555555 2000.0 1
 Monika Wisniewska 666666 2800.01 3
 Sylwia Wojciechowska 777777 4230.0 2
 Katarzyna Maciejewska 888888 4000.0 1
 Maria Wojcik 999999 2050.0 1
-Stefan Pierdzibak 987654 7037.0 2
-Stefan Pierdzibak 876521 12300.0 3
-Stefan Pierdzibak 909091 10000.0 1
-Zdzislaw Szeroki 567897 5670.0 2

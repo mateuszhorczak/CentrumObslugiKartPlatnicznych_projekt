@@ -2,13 +2,9 @@ Florencja Wojciechowska 236378 7000.0 3
 Eugeniusz Duda 216487 2000.0 1
 Eugeniusz Duda 425287 6000.0 3
 Lucja Tomaszewska 382328 1000.0 2
-Irena Jakubowska 723866 5463.0 2
+Irena Jakubowska 723866 5443.0 2
 Irena Jakubowska 276437 3500.0 3
 Zuzanna Zielinska 872345 6000.0 3
 Bogumil Bak 732677 8000.0 1
 Oktawian Baranowski 326561 2500.0 2
 Patryk Tomaszewski 327864 1500.0 1
-Aleksander Kaczynski 420213 1939.0 1
-Aleksander Kaczynski 404040 20000.0 2
-Jaroslaw Kaczynski 997997 96000.0 2
-Jaroslaw Kaczynski 567935 9660.0 3

@@ -1,23 +1,16 @@
 package com.github.mateuszhorczak;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
 
-import static java.util.Locale.getDefault;
-
 public class Main {
-    public static String wezWartosc(String[] wartosci, int index) {
-        System.out.println(wartosci[index].split(": ")[1]);
-        return wartosci[index].split(": ")[1];
-    }
+
 
     public static void main(String[] args) throws IOException, ParseException {
         Bank bank1 = new Bank("Bank1");
@@ -63,9 +56,16 @@ public class Main {
             } else {
                 continue;
             }
+            Date date = null;
+            SimpleDateFormat data = new SimpleDateFormat("EE MMM dd HH:mm:ss zzzz yyyy", Locale.US);
+            try {
+                date = data.parse(wezWartosc(wyrazy,2));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             Wpis wpisPlik = new Wpis(
                     new Osoba(wezWartosc(wyrazy, 0), wezWartosc(wyrazy, 1)),
-                    new Date(),
+                    date,
                     Double.parseDouble(wezWartosc(wyrazy, 3)),
                     karta,
                     klient,
@@ -274,11 +274,51 @@ public class Main {
                     break;
                 }
                 case 3:
-                    //Tutaj tryb serwisanta czyli 1 - mozliwosc wyswietlenia calego calego calgo archiwum z pliku od poczatku
-                    //  w tym switchu trzeba bedzie zrobic zeby mozna bylo pzrzsezukiwac te archiwum po danym parametrze
-                    // 2 - mozliwosc zobzaczenia oststnich wpisow czyli tych ktore zrobione w trakcie dzialania programu
-                    //  w tym switchu trzeba bedzie zrobic zeby mozna bylo pzrzsezukiwac te archiwum po danym parametrze
-                    // 3 - nie chcemy nic
+                        System.out.println("Co chcesz zrobic?");
+                        System.out.println("1 - Wyswietlic wszystkie wpisy z archiwum");
+                        System.out.println("2 - Wyswietlic wpisy wedlug kryterium");
+                        System.out.println("3 - Chce wrocic do glownego menu");
+                        int liczba = scanner.nextInt();
+                        switch(liczba){
+                            case 1:
+                                centrum.wypiszWpisy();
+                                break;
+                            case 2:
+                                System.out.println("Po jakim parametrze chcesz przeszukiwac?");
+                                System.out.println("1 - Po Osobie");
+                                System.out.println("2 - Po Kwocie");
+                                System.out.println("3 - Po Numerze Karty");
+                                System.out.println("4 - Po Nazwie Banku");
+                                System.out.println("5 - Po Nazwie Firmy");
+                                int liczba1 = scanner.nextInt();
+                                switch(liczba1){
+                                    case 1:
+                                        System.out.println("Podaj imie:" );
+                                        String imie = scanner.next();
+                                        System.out.println("Podaj nazwisko:" );
+                                        String nazwisko = scanner.next();
+                                        wypiszPoOsoba(centrum,imie,nazwisko);
+                                        break;
+                                    case 2:
+                                        System.out.println("Podaj kwote: ");
+                                        double kwota = scanner.nextDouble();
+                                        wypiszPoKwota(centrum,kwota);
+                                    case 3:
+                                        System.out.println("Podaj numer karty: ");
+                                        int numerKarty = scanner.nextInt();
+                                        wypiszPoNumerKarty(centrum,numerKarty);
+                                    case 4:
+                                        System.out.println("Podaj nazwe banku: ");
+                                        String nazwaBanku = scanner.next();
+                                        wypiszPoNazwaBanku(centrum,nazwaBanku);
+                                    case 5:
+                                        System.out.println("Podaj nazwe firmy: ");
+                                        String nazwaFirmy = scanner.next();
+                                        wypiszPoNazwaFirmy(centrum,nazwaFirmy);
+
+                                }
+                                break;
+                        }
 
                     break;
                 default:
@@ -286,11 +326,55 @@ public class Main {
             }
 
         }
-        centrum.wypiszWpisy();
         bank1.zapiszDane("dane1.txt");
         bank2.zapiszDane("dane2.txt");
         bank3.zapiszDane("dane3.txt");
         zapiszDoPliku.close();
+    }
+    public static void wypiszPoOsoba(Centrum centrum, String imie, String nazwisko){
+        for(Wpis wpis: centrum.getArchiwum()){
+            String imie1 = wpis.getOsoba().getImie();
+            String nazwisko1 = wpis.getOsoba().getNazwisko();
+            if (imie1.equals(imie) == true && nazwisko1.equals(nazwisko)==true){
+                System.out.println(centrum.pobierzWpisWyswietlanie(wpis));
+            }
+        }
+    }
+
+    public static void wypiszPoKwota(Centrum centrum, double kwota){
+        for(Wpis wpis: centrum.getArchiwum()){
+            double kwota1 = wpis.getKwota();
+            if (kwota1 == kwota){
+                System.out.println(centrum.pobierzWpisWyswietlanie(wpis));
+            }
+        }
+    }
+
+    public static void wypiszPoNumerKarty(Centrum centrum, int numerKarty){
+        for(Wpis wpis: centrum.getArchiwum()){
+            int numerKarty1 = wpis.getKarta().getNumerKarty();
+            if (numerKarty1 == numerKarty){
+                System.out.println(centrum.pobierzWpisWyswietlanie(wpis));
+            }
+        }
+    }
+
+    public static void wypiszPoNazwaBanku(Centrum centrum, String nazwaBanku){
+        for(Wpis wpis: centrum.getArchiwum()){
+            String nazwaBanku1 = wpis.getBank().pobierzNazwe();
+            if (nazwaBanku1.equals(nazwaBanku)==true){
+                System.out.println(centrum.pobierzWpisWyswietlanie(wpis));
+            }
+        }
+    }
+
+    public static void wypiszPoNazwaFirmy(Centrum centrum, String nazwaFirmy){
+        for(Wpis wpis: centrum.getArchiwum()){
+            String nazwaFirmy1 = wpis.getKlientCentrum().getNazwaFirmy();
+            if (nazwaFirmy1.equals(nazwaFirmy)==true){
+                System.out.println(centrum.pobierzWpisWyswietlanie(wpis));
+            }
+        }
     }
 
     private static boolean czyNieIstniejeNumerKarty(Centrum centrum, PrintWriter zapiszDoPliku, double kwota2, KlientCentrum firmaTransportowa, boolean czyIstnieje2) {
@@ -298,10 +382,10 @@ public class Main {
             return false;
         }
 
-        Date aktualnaData2 = new Date();
+        /*Date aktualnaData2 = new Date();
         Wpis wpis2 = new Wpis(aktualnaData2, kwota2, firmaTransportowa, false);
         centrum.dodajWpis(wpis2);
-        zapiszDoPliku.printf(centrum.pobierzWpisPlik(wpis2));
+        zapiszDoPliku.printf(centrum.pobierzWpisPlik(wpis2));*/
         System.out.println("Podany numer karty nie istnieje!");
         return true;
     }
@@ -373,5 +457,9 @@ public class Main {
 
         Karta karta = centrum.znajdzKarte(numerKarty);
         czyNieBankomatowa(centrum, printWriter, numerKarty, kwota, klientCentrum, karta);
+    }
+    public static String wezWartosc(String[] wartosci, int index) {
+        System.out.println(wartosci[index].split(": ")[1]);
+        return wartosci[index].split(": ")[1];
     }
 }
