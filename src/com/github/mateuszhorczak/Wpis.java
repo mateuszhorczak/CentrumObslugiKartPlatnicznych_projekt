@@ -3,15 +3,13 @@ package com.github.mateuszhorczak;
 import java.util.Date;
 
 public class Wpis {
-    int idWpis;
-    Osoba osoba;
-    Date data;
-    double kwota;
-    Karta karta;
-    KlientCentrum klientCentrum;
-    Bank bank;
-    boolean powodzenieTranskacji;
-    String typOperacji;
+    private final Osoba osoba;
+    private final Date data;
+    private final double kwota;
+    private final Karta karta;
+    private final KlientCentrum klientCentrum;
+    private final Bank bank;
+    private final boolean powodzenieTranskacji;
 
     public Wpis(Osoba osoba, Date data, double kwota, Karta karta, KlientCentrum klientCentrum,
                 Bank bank, boolean powodzenieTransakcji) {
@@ -22,27 +20,6 @@ public class Wpis {
         this.klientCentrum = klientCentrum;
         this.bank = bank;
         this.powodzenieTranskacji = powodzenieTransakcji;
-    }
-
-    public Wpis(Date data, double kwota, KlientCentrum klientCentrum, boolean powodzenieTransakcji) {
-        this.data = data;
-        this.kwota = kwota;
-        this.klientCentrum = klientCentrum;
-        this.powodzenieTranskacji = powodzenieTransakcji;
-    }
-
-    public Wpis(Osoba osoba, Date data, double kwota, Karta karta, Bank bank, boolean powodzenieTranskacji, String typOperacji) {
-        this.osoba = osoba;
-        this.data = data;
-        this.kwota = kwota;
-        this.karta = karta;
-        this.bank = bank;
-        this.powodzenieTranskacji = powodzenieTranskacji;
-        this.typOperacji = typOperacji;
-    }
-
-    public int getIdWpis() {
-        return idWpis;
     }
 
     public Osoba getOsoba() {

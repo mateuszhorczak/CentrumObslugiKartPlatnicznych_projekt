@@ -98,16 +98,6 @@ public class Bank {
         return false;
     }
 
-    public Osoba znajdzOsobe(String imie, String nazwisko) throws PersonDoesNotExistException {
-        for (var item : osoby) {
-            if (imie.equalsIgnoreCase(item.getImie()) && nazwisko.equalsIgnoreCase(item.getNazwisko())) {
-                return item;
-            }
-        }
-        throw new PersonDoesNotExistException();
-    }
-
-
     public void wplac(int numerPodany, double kwota) throws CardNotFoundException {
         Karta karta = wezKarte(numerPodany);
 
