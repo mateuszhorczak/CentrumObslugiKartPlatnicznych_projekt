@@ -3,10 +3,6 @@ package com.github.mateuszhorczak;
 public abstract class KlientCentrum {
     protected String nazwaFirmy;
 
-    public KlientCentrum(String nazwaFirmy) {
-        this.nazwaFirmy = nazwaFirmy;
-    }
-
     public String getNazwaFirmy() {
         return nazwaFirmy;
     }

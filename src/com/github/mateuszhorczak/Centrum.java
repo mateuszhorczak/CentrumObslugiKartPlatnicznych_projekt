@@ -1,15 +1,14 @@
 package com.github.mateuszhorczak;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class Centrum {
     private final ArrayList<Wpis> archiwum;
-    private final ArrayList<KlientCentrum> klienciCentrum;
     private final ArrayList<Bank> banki;
 
     public Centrum() {
         archiwum = new ArrayList<>();
-        klienciCentrum = new ArrayList<>();
         banki = new ArrayList<>();
     }
 
@@ -74,7 +73,6 @@ public class Centrum {
     public String pobierzWpisPlik(Wpis wpis) {
         String imie = null, nazwisko = null, data, kwota, numerKarty = null, rodzajKarty = null,
                 rodzajFirmy = null, nazwaFirmy = null, nazwaBanku = null, powodzenieTransakcji;
-        String typOperacji;
 
         if (wpis.getOsoba() != null) {
             imie = "Imie: " + wpis.getOsoba().getImie();
@@ -112,23 +110,19 @@ public class Centrum {
         }
         powodzenieTransakcji = "Powodzenie transakcji: " + wpis.getPowodzenieTranskacji();
 
-       /* rodzajFirmy = rodzajFirmy == null ? "" : rodzajFirmy + "\n";
-        nazwaFirmy = nazwaFirmy == null ? "" : nazwaFirmy + "\n";
-        typOperacji = wpis.typOperacji == null ? "" : "Typ operacji: " + wpis.typOperacji + "\n";*/
-        imie = imie == null?"Imie: null":imie;
-        nazwisko = nazwisko == null?"Nazwisko: null":nazwisko;
-        numerKarty = numerKarty == null?"NumerKarty: null":numerKarty;
-        rodzajKarty = rodzajKarty == null?"RodzajKarty: null":rodzajKarty;
-        nazwaBanku = nazwaBanku == null?"NazwaBanku: null":nazwaBanku;
-        return (imie+ ";" + nazwisko+ ";" + data+ ";" + kwota+ ";" + numerKarty+ ";" + rodzajKarty+ ";" +
-                rodzajFirmy+ ";" + nazwaFirmy+ ";" /*+ typOperacji*/ + nazwaBanku+ ";" + powodzenieTransakcji+"\n");
+        imie = imie == null ? "Imie: null" : imie;
+        nazwisko = nazwisko == null ? "Nazwisko: null" : nazwisko;
+        numerKarty = numerKarty == null ? "NumerKarty: null" : numerKarty;
+        rodzajKarty = rodzajKarty == null ? "RodzajKarty: null" : rodzajKarty;
+        nazwaBanku = nazwaBanku == null ? "NazwaBanku: null" : nazwaBanku;
+        return (imie + ";" + nazwisko + ";" + data + ";" + kwota + ";" + numerKarty + ";" + rodzajKarty + ";" +
+                rodzajFirmy + ";" + nazwaFirmy + ";" + nazwaBanku + ";" + powodzenieTransakcji + "\n");
 
     }
 
     public String pobierzWpisWyswietlanie(Wpis wpis) {
         String imie = null, nazwisko = null, data, kwota, numerKarty = null, rodzajKarty = null,
                 rodzajFirmy = null, nazwaFirmy = null, nazwaBanku = null, powodzenieTransakcji;
-        String typOperacji;
 
         if (wpis.getOsoba() != null) {
             imie = "Imie: " + wpis.getOsoba().getImie();
@@ -166,45 +160,10 @@ public class Centrum {
         }
         powodzenieTransakcji = "Powodzenie transakcji: " + wpis.getPowodzenieTranskacji();
 
-       /* rodzajFirmy = rodzajFirmy == null ? "" : rodzajFirmy + "\n";
-        nazwaFirmy = nazwaFirmy == null ? "" : nazwaFirmy + "\n";
-        typOperacji = wpis.typOperacji == null ? "" : "Typ operacji: " + wpis.typOperacji + "\n";*/
-
         return (imie + "\n" + nazwisko + "\n" + data + "\n" + kwota + "\n" + numerKarty + "\n" + rodzajKarty + "\n" +
-                rodzajFirmy +"\n"+ nazwaFirmy + "\n"/*+ typOperacji*/ + nazwaBanku + "\n" + powodzenieTransakcji + "\n"
+                rodzajFirmy + "\n" + nazwaFirmy + "\n" + nazwaBanku + "\n" + powodzenieTransakcji + "\n"
                 + "******************** ********************\n");
 
-    }
-
-    public boolean czyIstniejeKlient(String nazwaFirmy) {
-        for (var item : klienciCentrum) {
-            if (Objects.equals(item.getNazwaFirmy(), nazwaFirmy)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean dodajKlient(KlientCentrum klient) {
-        if (!czyIstniejeKlient(klient.nazwaFirmy)) {
-            klienciCentrum.add(klient);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean usunKlient(KlientCentrum klient) {
-        if (czyIstniejeKlient(klient.nazwaFirmy)) {
-            klienciCentrum.remove(klient);
-            return true;
-        }
-        return false;
-    }
-
-    public void wypiszKlientow() {
-        for (var item : klienciCentrum) {
-            System.out.println(item.getNazwaFirmy());
-        }
     }
 
     public boolean czyIstniejeNumerKarty(int numerKarty) {
@@ -270,18 +229,6 @@ public class Centrum {
         return null;
     }
 
-    public boolean wyslijZapytanie(int numerKarty, double kwota) {
-        return true;
-    }
-
-    public int iloscBankow(Centrum centrum) {
-        return centrum.getBanki().lastIndexOf(centrum.getBanki().get(0));
-    }
-
-    public int iloscSklepow(Centrum centrum) {
-        return centrum.getKlienciCentrum().lastIndexOf(centrum.getKlienciCentrum().get(0));
-    }
-
     public boolean czyNumerKartyJestZajety(int numerKarty) {
         for (var item : getBanki()) {
             for (var item2 : item.getOsoby()) {
@@ -297,10 +244,6 @@ public class Centrum {
 
     public ArrayList<Wpis> getArchiwum() {
         return archiwum;
-    }
-
-    public ArrayList<KlientCentrum> getKlienciCentrum() {
-        return klienciCentrum;
     }
 
     public ArrayList<Bank> getBanki() {

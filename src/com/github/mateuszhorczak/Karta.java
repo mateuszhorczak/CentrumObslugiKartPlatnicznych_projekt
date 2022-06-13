@@ -1,4 +1,5 @@
 package com.github.mateuszhorczak;
+
 public abstract class Karta {
     protected int numerKarty;
     protected double stanKarty;
@@ -7,6 +8,7 @@ public abstract class Karta {
         this.numerKarty = numerKarty;
         this.stanKarty = stanKarty;
     }
+
     public Karta(int numerKarty) {
         this.numerKarty = numerKarty;
     }
@@ -19,12 +21,11 @@ public abstract class Karta {
         return stanKarty;
     }
 
-    public boolean platnosc(double kwota){
+    public boolean platnosc(double kwota) {
         if (stanKarty >= kwota) {
             stanKarty -= kwota;
             return true;
-        }
-        else{
+        } else {
             System.out.println("Za malo srodkow - platnosc nie zrealizowana!");
             return false;
         }

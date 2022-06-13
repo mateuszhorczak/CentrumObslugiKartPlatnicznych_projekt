@@ -1,15 +1,14 @@
 package com.github.mateuszhorczak;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
+
 public class Main {
-    public static void main(String[] args) throws IOException, ParseException {
+    public static void main(String[] args) throws IOException {
         Bank bank1 = new Bank("Bank1");
         bank1.wczytajDane("dane1.txt");
         Bank bank2 = new Bank("Bank2");
@@ -28,35 +27,44 @@ public class Main {
         while (scannerZPliku.hasNext()) {
             String linia = scannerZPliku.nextLine();
             linie.add(linia);
-            String wyrazy[] = linia.split(";");
+            String[] wyrazy = linia.split(";");
             Karta karta;
-            if (wezWartosc(wyrazy, 5).equals("KartaBankomatowa")) {
-                karta = new KartaBankomatowa(Integer.parseInt(wezWartosc(wyrazy, 4)));
-            } else if (wezWartosc(wyrazy, 5).equals("KartaKredytowa")) {
-                karta = new KartaKredytowa(Integer.parseInt(wezWartosc(wyrazy, 4)));
-            } else if (wezWartosc(wyrazy, 5).equals("KartaDebetowa")) {
-                karta = new KartaDebetowa(Integer.parseInt(wezWartosc(wyrazy, 4)));
-            } else {
-                continue;
+            switch (wezWartosc(wyrazy, 5)) {
+                case "KartaBankomatowa":
+                    karta = new KartaBankomatowa(Integer.parseInt(wezWartosc(wyrazy, 4)));
+                    break;
+                case "KartaKredytowa":
+                    karta = new KartaKredytowa(Integer.parseInt(wezWartosc(wyrazy, 4)));
+                    break;
+                case "KartaDebetowa":
+                    karta = new KartaDebetowa(Integer.parseInt(wezWartosc(wyrazy, 4)));
+                    break;
+                default:
+                    continue;
             }
 
             KlientCentrum klient;
-            if (wezWartosc(wyrazy, 6).equals("FirmaTransportowa")) {
-                klient = new FirmaTransportowa();
-                klient.setNazwaFirmy(wezWartosc(wyrazy, 7));
-            } else if (wezWartosc(wyrazy, 6).equals("ZakladUslugowy")) {
-                klient = new ZakladUslugowy();
-                klient.setNazwaFirmy(wezWartosc(wyrazy, 7));
-            } else if (wezWartosc(wyrazy, 6).equals("Sklep")) {
-                klient = new Sklep();
-                klient.setNazwaFirmy(wezWartosc(wyrazy, 7));
-            } else {
-                continue;
+            switch (wezWartosc(wyrazy, 6)) {
+                case "FirmaTransportowa":
+                    klient = new FirmaTransportowa();
+                    klient.setNazwaFirmy(wezWartosc(wyrazy, 7));
+                    break;
+                case "ZakladUslugowy":
+                    klient = new ZakladUslugowy();
+                    klient.setNazwaFirmy(wezWartosc(wyrazy, 7));
+                    break;
+                case "Sklep":
+                    klient = new Sklep();
+                    klient.setNazwaFirmy(wezWartosc(wyrazy, 7));
+                    break;
+                default:
+                    continue;
             }
+
             Date date = null;
             SimpleDateFormat data = new SimpleDateFormat("EE MMM dd HH:mm:ss zzzz yyyy", Locale.US);
             try {
-                date = data.parse(wezWartosc(wyrazy,2));
+                date = data.parse(wezWartosc(wyrazy, 2));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -67,10 +75,11 @@ public class Main {
                     karta,
                     klient,
                     new Bank(wezWartosc(wyrazy, 8)),
-                    wezWartosc(wyrazy, 9) == "true"
+                    Objects.equals(wezWartosc(wyrazy, 9), "true")
             );
             centrum.dodajWpis(wpisPlik);
         }
+
         plik.createNewFile();
         PrintWriter zapiszDoPliku = new PrintWriter(plik);
         for (i = 0; i < linie.size(); i++) {
@@ -111,16 +120,15 @@ public class Main {
                             break;
                     }
                     break;
+
                 case 2: {
                     int numerBanku;
-                    while (true) {
+                    do {
                         System.out.println("Do ktorego banku chcesz sie udac, podaj index (zaczyna sie od 0): ");
                         centrum.wypiszBanki();
                         numerBanku = scanner.nextInt();
-                        if (numerBanku >= 0 && numerBanku <= 2) {
-                            break;
-                        }
-                    }
+                    } while (numerBanku < 0 || numerBanku > 2);
+
                     System.out.println("Witaj w banku!");
                     System.out.println("Co chcesz zrobic?");
                     System.out.println("1 - Wplacic pieniadze do banku");
@@ -142,22 +150,8 @@ public class Main {
                         numerKarty = scanner.nextInt();
                         System.out.println("Podaj kwote: ");
                         kwota = scanner.nextDouble();
-
                         boolean czyIstnieje = centrum.czyIstniejeNumerKarty(numerKarty);
                         if (!czyIstnieje) {
-                            /*Date aktualnaData1 = new Date();
-                            Wpis wpis = new Wpis(centrum.znajdzOsobePoNumerze(numerKarty),
-                                    aktualnaData1,
-                                    kwota,
-                                    centrum.znajdzKarte(numerKarty),
-                                    centrum.znajdzBankWKtorymJestTenNumerKarty(numerKarty),
-                                    false,
-                                    "Karta nie istnieje"
-                            );
-                            centrum.dodajWpis(wpis);
-                            zapiszDoPliku.printf(centrum.pobierzWpis(wpis));*/
-
-                            System.out.println("Podany numer karty nie istnieje");
                             break;
                         }
                     }
@@ -166,19 +160,6 @@ public class Main {
                         case 1:
                             try {
                                 centrum.znajdzBankWKtorymJestTenNumerKarty(numerKarty).wplac(numerKarty, kwota);
-
-                                /*Wpis wpis = new Wpis(
-                                        centrum.znajdzOsobePoNumerze(numerKarty),
-                                        new Date(),
-                                        kwota,
-                                        centrum.znajdzKarte(numerKarty),
-                                        centrum.znajdzBankWKtorymJestTenNumerKarty(numerKarty),
-                                        true,
-                                        "Wplata"
-                                );
-                                centrum.dodajWpis(wpis);
-                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis));*/
-
                                 System.out.println("Poprawnie uiszczone wplate na konto");
 
                             } catch (CardNotFoundException exception) {
@@ -189,36 +170,11 @@ public class Main {
                         case 2:
                             try {
                                 centrum.znajdzBankWKtorymJestTenNumerKarty(numerKarty).wyplac(numerKarty, kwota);
-
-                                /*Wpis wpis = new Wpis(
-                                        centrum.znajdzOsobePoNumerze(numerKarty),
-                                        new Date(),
-                                        kwota,
-                                        centrum.znajdzKarte(numerKarty),
-                                        centrum.znajdzBankWKtorymJestTenNumerKarty(numerKarty),
-                                        true,
-                                        "Wyplata"
-                                );
-                                centrum.dodajWpis(wpis);
-                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis));*/
-
                                 System.out.println("Wyplata pieniedzy powiodla sie!");
 
                             } catch (CardNotFoundException exception) {
                                 System.out.println("Karta nie istnieje");
                             } catch (InvalidCardDataException exception) {
-                                /*Wpis wpis = new Wpis(
-                                        centrum.znajdzOsobePoNumerze(numerKarty),
-                                        new Date(),
-                                        kwota,
-                                        centrum.znajdzKarte(numerKarty),
-                                        centrum.znajdzBankWKtorymJestTenNumerKarty(numerKarty),
-                                        false,
-                                        "Wyplata"
-                                );
-                                centrum.dodajWpis(wpis);
-                                zapiszDoPliku.printf(centrum.pobierzWpis(wpis));*/
-
                                 System.out.println("Na karcie nie ma wystarczajacych srodkow!");
                             }
                             break;
@@ -245,144 +201,141 @@ public class Main {
                             String imie = scanner.next();
                             System.out.println("Podaj swoje nazwisko: ");
                             String nazwisko = scanner.next();
-                            Osoba osoba = centrum.znajdzOsobePoImieniuINazwisku(imie, nazwisko);
 
+                            Osoba osoba = centrum.znajdzOsobePoImieniuINazwisku(imie, nazwisko);
                             if (osoba == null) {
                                 osoba = new Osoba(imie, nazwisko);
                             }
+
                             Bank bank = centrum.getBanki().get(numerBanku);
                             bank.dodajDobryTypKarty(rodzajKarty, nrKarty, kwotaWplacenia, osoba);
                             bank.dodajOsobe(osoba);
-
-                            /*Wpis wpis = new Wpis(
-                                    centrum.znajdzOsobePoNumerze(nrKarty),
-                                    new Date(),
-                                    kwotaWplacenia,
-                                    centrum.znajdzKarte(numerKarty),
-                                    bank,
-                                    true,
-                                    "Wydano nowa karte!"
-                            );
-                            centrum.dodajWpis(wpis);
-                            zapiszDoPliku.printf(centrum.pobierzWpis(wpis));*/
-
                             System.out.println("Oto twoja karta!");
                     }
                     break;
                 }
+
                 case 3:
-                        System.out.println("Co chcesz zrobic?");
-                        System.out.println("1 - Wyswietlic wszystkie wpisy z archiwum");
-                        System.out.println("2 - Wyswietlic wpisy wedlug kryterium");
-                        System.out.println("3 - Chce wrocic do glownego menu");
-                        int liczba = scanner.nextInt();
-                        switch(liczba){
-                            case 1:
-                                centrum.wypiszWpisy();
-                                break;
-                            case 2:
-                                System.out.println("Po jakim parametrze chcesz przeszukiwac?");
-                                System.out.println("1 - Po Osobie");
-                                System.out.println("2 - Po Kwocie");
-                                System.out.println("3 - Po Numerze Karty");
-                                System.out.println("4 - Po Nazwie Banku");
-                                System.out.println("5 - Po Nazwie Firmy");
-                                int liczba1 = scanner.nextInt();
-                                switch(liczba1){
-                                    case 1:
-                                        System.out.println("Podaj imie:" );
-                                        String imie = scanner.next();
-                                        System.out.println("Podaj nazwisko:" );
-                                        String nazwisko = scanner.next();
-                                        wypiszPoOsoba(centrum,imie,nazwisko);
-                                        break;
-                                    case 2:
-                                        System.out.println("Podaj kwote: ");
-                                        double kwota = scanner.nextDouble();
-                                        wypiszPoKwota(centrum,kwota);
-                                    case 3:
-                                        System.out.println("Podaj numer karty: ");
-                                        int numerKarty = scanner.nextInt();
-                                        wypiszPoNumerKarty(centrum,numerKarty);
-                                    case 4:
-                                        System.out.println("Podaj nazwe banku: ");
-                                        String nazwaBanku = scanner.next();
-                                        wypiszPoNazwaBanku(centrum,nazwaBanku);
-                                    case 5:
-                                        System.out.println("Podaj nazwe firmy: ");
-                                        String nazwaFirmy = scanner.next();
-                                        wypiszPoNazwaFirmy(centrum,nazwaFirmy);
+                    System.out.println("Co chcesz zrobic?");
+                    System.out.println("1 - Wyswietlic wszystkie wpisy z archiwum");
+                    System.out.println("2 - Wyswietlic wpisy wedlug kryterium");
+                    System.out.println("3 - Chce wrocic do glownego menu");
 
-                                }
-                                break;
-                        }
+                    int liczba = scanner.nextInt();
+                    switch (liczba) {
+                        case 1:
+                            centrum.wypiszWpisy();
+                            break;
 
+                        case 2:
+                            System.out.println("Po jakim parametrze chcesz przeszukiwac?");
+                            System.out.println("1 - Po Osobie");
+                            System.out.println("2 - Po Kwocie");
+                            System.out.println("3 - Po Numerze Karty");
+                            System.out.println("4 - Po Nazwie Banku");
+                            System.out.println("5 - Po Nazwie Firmy");
+                            int liczba1 = scanner.nextInt();
+
+                            switch (liczba1) {
+                                case 1:
+                                    System.out.println("Podaj imie:");
+                                    String imie = scanner.next();
+                                    System.out.println("Podaj nazwisko:");
+                                    String nazwisko = scanner.next();
+                                    wypiszPoOsoba(centrum, imie, nazwisko);
+                                    break;
+
+                                case 2:
+                                    System.out.println("Podaj kwote: ");
+                                    double kwota = scanner.nextDouble();
+                                    wypiszPoKwota(centrum, kwota);
+                                    break;
+
+                                case 3:
+                                    System.out.println("Podaj numer karty: ");
+                                    int numerKarty = scanner.nextInt();
+                                    wypiszPoNumerKarty(centrum, numerKarty);
+                                    break;
+
+                                case 4:
+                                    System.out.println("Podaj nazwe banku: ");
+                                    String nazwaBanku = scanner.next();
+                                    wypiszPoNazwaBanku(centrum, nazwaBanku);
+                                    break;
+
+                                case 5:
+                                    System.out.println("Podaj nazwe firmy: ");
+                                    String nazwaFirmy = scanner.next();
+                                    wypiszPoNazwaFirmy(centrum, nazwaFirmy);
+                                    break;
+
+                            }
+                            break;
+
+                    }
                     break;
+
                 default:
                     System.out.println("Bład - sprobuj jeszce raz!");
             }
-
         }
         bank1.zapiszDane("dane1.txt");
         bank2.zapiszDane("dane2.txt");
         bank3.zapiszDane("dane3.txt");
         zapiszDoPliku.close();
     }
-    public static void wypiszPoOsoba(Centrum centrum, String imie, String nazwisko){
-        for(Wpis wpis: centrum.getArchiwum()){
+
+    public static void wypiszPoOsoba(Centrum centrum, String imie, String nazwisko) {
+        for (Wpis wpis : centrum.getArchiwum()) {
             String imie1 = wpis.getOsoba().getImie();
             String nazwisko1 = wpis.getOsoba().getNazwisko();
-            if (imie1.equals(imie) == true && nazwisko1.equals(nazwisko)==true){
+            if (imie1.equals(imie) && nazwisko1.equals(nazwisko)) {
                 System.out.println(centrum.pobierzWpisWyswietlanie(wpis));
             }
         }
     }
 
-    public static void wypiszPoKwota(Centrum centrum, double kwota){
-        for(Wpis wpis: centrum.getArchiwum()){
+    public static void wypiszPoKwota(Centrum centrum, double kwota) {
+        for (Wpis wpis : centrum.getArchiwum()) {
             double kwota1 = wpis.getKwota();
-            if (kwota1 == kwota){
+            if (kwota1 == kwota) {
                 System.out.println(centrum.pobierzWpisWyswietlanie(wpis));
             }
         }
     }
 
-    public static void wypiszPoNumerKarty(Centrum centrum, int numerKarty){
-        for(Wpis wpis: centrum.getArchiwum()){
+    public static void wypiszPoNumerKarty(Centrum centrum, int numerKarty) {
+        for (Wpis wpis : centrum.getArchiwum()) {
             int numerKarty1 = wpis.getKarta().getNumerKarty();
-            if (numerKarty1 == numerKarty){
+            if (numerKarty1 == numerKarty) {
                 System.out.println(centrum.pobierzWpisWyswietlanie(wpis));
             }
         }
     }
 
-    public static void wypiszPoNazwaBanku(Centrum centrum, String nazwaBanku){
-        for(Wpis wpis: centrum.getArchiwum()){
+    public static void wypiszPoNazwaBanku(Centrum centrum, String nazwaBanku) {
+        for (Wpis wpis : centrum.getArchiwum()) {
             String nazwaBanku1 = wpis.getBank().pobierzNazwe();
-            if (nazwaBanku1.equals(nazwaBanku)==true){
+            if (nazwaBanku1.equals(nazwaBanku)) {
                 System.out.println(centrum.pobierzWpisWyswietlanie(wpis));
             }
         }
     }
 
-    public static void wypiszPoNazwaFirmy(Centrum centrum, String nazwaFirmy){
-        for(Wpis wpis: centrum.getArchiwum()){
+    public static void wypiszPoNazwaFirmy(Centrum centrum, String nazwaFirmy) {
+        for (Wpis wpis : centrum.getArchiwum()) {
             String nazwaFirmy1 = wpis.getKlientCentrum().getNazwaFirmy();
-            if (nazwaFirmy1.equals(nazwaFirmy)==true){
+            if (nazwaFirmy1.equals(nazwaFirmy)) {
                 System.out.println(centrum.pobierzWpisWyswietlanie(wpis));
             }
         }
     }
 
-    private static boolean czyNieIstniejeNumerKarty(Centrum centrum, PrintWriter zapiszDoPliku, double kwota2, KlientCentrum firmaTransportowa, boolean czyIstnieje2) {
+    private static boolean czyNieIstniejeNumerKarty(boolean czyIstnieje2) {
         if (czyIstnieje2) {
             return false;
         }
 
-        /*Date aktualnaData2 = new Date();
-        Wpis wpis2 = new Wpis(aktualnaData2, kwota2, firmaTransportowa, false);
-        centrum.dodajWpis(wpis2);
-        zapiszDoPliku.printf(centrum.pobierzWpisPlik(wpis2));*/
         System.out.println("Podany numer karty nie istnieje!");
         return true;
     }
@@ -443,10 +396,6 @@ public class Main {
         double kwota = scanner.nextDouble();
 
         if (czyNieIstniejeNumerKarty(
-                centrum,
-                printWriter,
-                kwota,
-                klientCentrum,
                 centrum.czyIstniejeNumerKarty(numerKarty))
         ) {
             return;
@@ -455,8 +404,8 @@ public class Main {
         Karta karta = centrum.znajdzKarte(numerKarty);
         czyNieBankomatowa(centrum, printWriter, numerKarty, kwota, klientCentrum, karta);
     }
+
     public static String wezWartosc(String[] wartosci, int index) {
-        System.out.println(wartosci[index].split(": ")[1]);
         return wartosci[index].split(": ")[1];
     }
 }
